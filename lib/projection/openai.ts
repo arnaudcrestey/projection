@@ -1,4 +1,3 @@
-// trigger after reconnect
 import OpenAI from "openai";
 import { buildFallbackProjection } from "@/lib/projection/fallback";
 import { buildProjectionPrompt } from "@/lib/projection/prompt";
