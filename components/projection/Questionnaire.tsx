@@ -165,7 +165,7 @@ export function Questionnaire() {
             disabled={loading}
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[linear-gradient(135deg,#2f63e9_0%,#2d58cf_100%)] px-5 text-[13px] font-semibold text-white shadow-[0_14px_28px_rgba(47,99,233,0.24)] transition hover:scale-[1.01] hover:shadow-[0_18px_34px_rgba(47,99,233,0.3)] disabled:cursor-not-allowed disabled:opacity-60 sm:min-h-[48px] sm:px-6 sm:text-sm"
           >
-            {loading ? "Traitement en cours..." : "Lancer ma projection"}
+            {loading ? "Traitement en cours..." : "Voir ma projection"}
           </button>
         </div>
       </div>
