@@ -12,7 +12,7 @@ const benefits = [
   },
   {
     title: "Base exploitable",
-    text: "Savoir quoi dire et comment le présenter",
+    text: "Savoir quoi dire et comment le formuler clairement",
   },
 ];
 
@@ -38,7 +38,7 @@ export default function HomePage() {
               href="/questions"
               className="inline-flex min-h-[54px] items-center justify-center rounded-full bg-[#2f58c8] px-7 py-3 text-sm font-semibold text-white shadow-[0_16px_34px_rgba(47,88,200,0.28)] transition duration-200 hover:-translate-y-[1px] hover:shadow-[0_18px_40px_rgba(47,88,200,0.34)]"
             >
-              Faire le point sur mon activité
+              Faire le point sur votre activité
             </Link>
 
             <p className="text-sm text-slateSoft">
