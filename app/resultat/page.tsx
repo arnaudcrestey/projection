@@ -32,10 +32,9 @@ export default function ResultatPage() {
             Voici une version plus claire de votre activité
           </h1>
 
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slateSoft md:mt-4 md:text-[1.02rem]">
-            Une base claire pour mieux présenter votre activité, orienter votre
-            point d’entrée et préparer la suite avec cohérence.
-          </p>
+         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slateSoft md:mt-4 md:text-[1.02rem]">
+  Une base claire pour mieux présenter votre activité et orienter la suite.
+</p>
         </div>
 
         <Link
