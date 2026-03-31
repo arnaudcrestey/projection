@@ -9,7 +9,10 @@ export function PageFrame({ children }: PageFrameProps) {
   return (
     <div className="premium-shell">
       <header className="mb-10 flex w-full items-start justify-between gap-6">
-        <Link href="/" className="inline-flex shrink-0 flex-col items-start leading-none">
+        <Link
+          href="/"
+          className="inline-flex shrink-0 flex-col items-center text-center leading-none"
+        >
           <span
             className="text-[2.9rem] tracking-[-0.06em] text-ink md:text-[3.3rem]"
             style={{ fontFamily: "Cormorant Garamond, serif" }}
@@ -21,7 +24,7 @@ export function PageFrame({ children }: PageFrameProps) {
             arnaudcrestey.com
           </span>
 
-          <span className="mt-2 h-px w-12 bg-[rgba(23,38,63,0.16)]" />
+          <span className="mt-2 block h-px w-12 bg-[rgba(23,38,63,0.16)]" />
         </Link>
 
         <div className="shrink-0 pt-1">
