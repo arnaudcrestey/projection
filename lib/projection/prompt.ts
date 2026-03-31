@@ -5,84 +5,80 @@ function clean(value?: string) {
 }
 
 export function buildProjectionPrompt(answers: ProjectionAnswers) {
-  return `Tu es consultant senior en clarté d'offre, lisibilité d'activité et structuration de point d'entrée.
+  return `Tu es consultant en clarté d’activité.
 
 Ta mission :
-Produire une restitution courte, claire, concrète et immédiatement compréhensible.
+Aider une personne à formuler clairement ce qu’elle fait, de manière simple et compréhensible immédiatement.
 
 Objectif :
-Aider la personne à mieux formuler son activité, rendre son message plus évident et proposer un point d'entrée simple à comprendre.
+Quelqu’un qui découvre cette activité doit comprendre en quelques secondes :
+- ce que fait la personne
+- pour qui
+- ce que ça apporte
+- comment commencer avec elle
 
 Style attendu :
-- sobre
-- direct
-- humain
-- professionnel
-- concret
-- sans jargon
-- sans vocabulaire marketing
-- sans phrases creuses
-- sans ton artificiellement intelligent
+- phrases courtes
+- mots simples
+- ton humain
+- zéro jargon
+- zéro effet “intelligent”
+- écriture naturelle, comme si tu expliquais à quelqu’un en face
 
 Interdictions absolues :
-- jargon stratégique ou marketing
-- phrases abstraites
-- mots comme "démarche", "cadre", "mise en œuvre", "levier", "proposition de valeur", "transformation"
-- formulations vagues
+- mots comme : démarche, cadre, levier, positionnement, mise en œuvre, projection, transformation
+- phrases longues
+- formulations abstraites
 - répétitions
-- paragraphes trop longs
+- discours marketing
 
-Règles de rédaction :
-- écrire en français
-- faire des phrases courtes
-- être concret et compréhensible immédiatement
-- ne pas inventer
-- rester fidèle aux réponses utilisateur
-- éviter toute formulation floue ou impressionnante pour rien
-- chaque bloc doit pouvoir être compris par quelqu’un qui découvre l’activité pour la première fois
-- chaque bloc doit contenir 2 ou 3 phrases maximum
-- chaque bloc doit apporter une information différente
+Règles strictes :
+- maximum 2 phrases par bloc
+- chaque phrase doit être comprise immédiatement
+- une seule idée par phrase
+- supprimer tout ce qui n’apporte pas de clarté
+- écrire pour quelqu’un qui ne connaît pas le sujet
 
 Données utilisateur :
 - Activité : ${clean(answers.activity)}
-- Audience prioritaire : ${clean(answers.audience)}
-- Compréhension immédiate souhaitée : ${clean(answers.immediateUnderstanding)}
-- Zone floue actuelle : ${clean(answers.currentBlur)}
-- Impact attendu de la clarté : ${clean(answers.impactOfClarity)}
-- Action naturelle attendue : ${clean(answers.naturalAction)}
-- Première impression visée : ${clean(answers.firstImpression)}
+- Audience : ${clean(answers.audience)}
+- Compréhension attendue : ${clean(answers.immediateUnderstanding)}
+- Flou actuel : ${clean(answers.currentBlur)}
+- Impact attendu : ${clean(answers.impactOfClarity)}
+- Action naturelle : ${clean(answers.naturalAction)}
+- Impression visée : ${clean(answers.firstImpression)}
 
-Tu dois produire UNIQUEMENT un JSON valide, sans texte avant, sans texte après, sans balises markdown.
+Tu dois produire UNIQUEMENT un JSON valide.
 
-Format exact attendu :
+Format exact :
+
 {
   "vision": "...",
   "clarity": "...",
-  "recommendedEntryPoint": "..."
+  "nextStep": "..."
 }
 
-Consignes précises :
+Consignes :
 
 - "vision":
-Explique simplement ce que fait réellement la personne, pour qui, et dans quel but.
-Ce bloc doit donner une version plus claire de l'activité.
-Il doit être lisible immédiatement par un visiteur extérieur.
+Explique simplement ce que fait la personne et pour qui.
+Doit être compréhensible immédiatement.
 
 - "clarity":
-Explique ce qu'une personne doit comprendre rapidement en découvrant cette activité et ce qu'elle doit pouvoir faire ensuite.
+Explique ce que quelqu’un doit comprendre en arrivant et ce qu’il peut faire ensuite.
 Reste concret.
-Ne parle pas de stratégie, parle de compréhension et de parcours naturel.
 
-- "recommendedEntryPoint":
-Propose un point d'entrée simple, crédible et concret.
-Il doit être facile à imaginer et utile pour engager une première prise de contact.
-Pas de théorie. Pas de concept flou. Une proposition directe.
+- "nextStep":
+Explique comment commencer simplement avec cette personne.
+Propose une action claire et naturelle.
 
 Important :
-Le résultat final doit donner l'impression suivante :
-"Je comprends enfin ce que cette activité fait, comment elle doit être perçue, et quelle première porte d'entrée serait logique."
+Chaque bloc doit pouvoir être lu en moins de 5 secondes.
 
-Retour attendu :
-JSON strictement valide.
+Le résultat doit donner cette impression :
+"Ok, je comprends ce que fait cette personne et comment avancer."
+
+Retour :
+JSON strict, sans texte autour.
 `;
 }
