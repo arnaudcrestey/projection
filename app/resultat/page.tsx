@@ -26,26 +26,29 @@ export default function ResultatPage() {
 
   return (
     <PageFrame>
-      <section className="mb-8 flex flex-wrap items-start justify-between gap-4 md:mb-10">
+      <section className="mb-8 md:mb-10">
         <div className="max-w-3xl">
           <h1 className="text-2xl font-semibold leading-tight text-ink md:text-[2.6rem] md:leading-[1.08]">
             Voici une version plus claire de votre activité
           </h1>
 
-         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slateSoft md:mt-4 md:text-[1.02rem]">
-  Une base claire pour mieux présenter votre activité et orienter la suite.
-</p>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slateSoft md:mt-4 md:text-[1.02rem]">
+            Une base claire pour mieux présenter votre activité et orienter la suite.
+          </p>
         </div>
-
-        <Link
-          href="/questions"
-          className="rounded-xl border border-mist bg-white/72 px-4 py-2 text-sm font-medium text-ink transition hover:bg-white"
-        >
-          Refaire la projection
-        </Link>
       </section>
 
       {result ? <ResultCards result={result} /> : null}
+
+      <div className="mt-6 flex justify-center md:mt-8">
+        <Link
+          href="/questions"
+          className="text-sm font-medium text-[#5f78a3] underline decoration-[#c8d6ee] underline-offset-4 transition hover:text-[#173b73]"
+        >
+          Recommencer la projection
+        </Link>
+      </div>
+
       {result ? <LeadForm projectionSnapshot={result} /> : null}
     </PageFrame>
   );
