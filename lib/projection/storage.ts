@@ -1,7 +1,7 @@
 import type { ProjectionAnswers, ProjectionResult } from "@/lib/projection/types";
 
-const ANSWERS_KEY = "projection_answers_v1";
-const RESULT_KEY = "projection_result_v1";
+const ANSWERS_KEY = "projection_answers_v2";
+const RESULT_KEY = "projection_result_v2";
 
 function canUseStorage() {
   return typeof window !== "undefined" && typeof window.sessionStorage !== "undefined";
@@ -39,4 +39,10 @@ export function loadResult(): ProjectionResult | null {
   } catch {
     return null;
   }
+}
+
+export function clearProjectionStorage() {
+  if (!canUseStorage()) return;
+  window.sessionStorage.removeItem(ANSWERS_KEY);
+  window.sessionStorage.removeItem(RESULT_KEY);
 }
