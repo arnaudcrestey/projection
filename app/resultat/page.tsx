@@ -26,21 +26,21 @@ export default function ResultatPage() {
 
   return (
     <PageFrame>
-      <section className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold md:text-4xl">
-            Votre projection structurée
+      <section className="mb-8 flex flex-wrap items-start justify-between gap-4 md:mb-10">
+        <div className="max-w-3xl">
+          <h1 className="text-2xl font-semibold leading-tight text-ink md:text-[2.6rem] md:leading-[1.08]">
+            Voici une version plus claire de votre activité
           </h1>
 
-          <p className="mt-3 text-sm leading-relaxed text-slateSoft md:text-base">
-            Une base claire pour positionner votre activité et orienter vos
-            prochains arbitrages.
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slateSoft md:mt-4 md:text-[1.02rem]">
+            Une base claire pour mieux présenter votre activité, orienter votre
+            point d’entrée et préparer la suite avec cohérence.
           </p>
         </div>
 
         <Link
           href="/questions"
-          className="rounded-xl border border-mist px-4 py-2 text-sm font-medium text-ink transition hover:bg-white"
+          className="rounded-xl border border-mist bg-white/72 px-4 py-2 text-sm font-medium text-ink transition hover:bg-white"
         >
           Refaire la projection
         </Link>
