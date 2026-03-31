@@ -1,3 +1,4 @@
+// update v2
 import OpenAI from "openai";
 import { buildFallbackProjection } from "@/lib/projection/fallback";
 import { buildProjectionPrompt } from "@/lib/projection/prompt";
