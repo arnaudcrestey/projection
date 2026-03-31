@@ -6,11 +6,35 @@ import { projectionQuestions } from "@/lib/projection/questions";
 import { loadAnswers, saveAnswers, saveResult } from "@/lib/projection/storage";
 import type { ProjectionAnswers } from "@/lib/projection/types";
 
-function initialAnswers(): ProjectionAnswers {
+const USE_MOCK_ANSWERS = true;
+
+const mockAnswers: ProjectionAnswers = {
+  activity:
+    "J’accompagne des personnes qui se sentent perdues ou en perte de repères à retrouver de la clarté, à mieux comprendre leur situation et à avancer de manière plus structurée dans leur vie personnelle et professionnelle.",
+  audience:
+    "Des personnes en transition, en doute ou en blocage, qui cherchent à retrouver du sens, de la confiance et une direction plus claire dans leur vie.",
+  immediateUnderstanding:
+    "Je vous aide à comprendre ce que vous traversez et à le transformer en un plan d’action clair, adapté et concret.",
+  currentBlur:
+    "Mon activité reste difficile à comprendre rapidement : les bénéfices ne sont pas assez explicites, la méthode n’est pas suffisamment structurée et le positionnement reste trop large.",
+  impactOfClarity:
+    "Je pourrais attirer les bonnes personnes, expliquer plus simplement mon accompagnement et générer davantage de demandes qualifiées.",
+  naturalAction:
+    "Prendre contact facilement, comprendre rapidement mon approche, puis réserver un premier échange ou un accompagnement.",
+  firstImpression:
+    "Une impression de sérieux, de clarté et de confiance, avec une approche humaine mais structurée et orientée vers des résultats concrets."
+};
+
+function emptyAnswers(): ProjectionAnswers {
   return projectionQuestions.reduce<ProjectionAnswers>((acc, question) => {
     acc[question.id] = "";
     return acc;
-  }, {});
+  }, {} as ProjectionAnswers);
+}
+
+function initialAnswers(): ProjectionAnswers {
+  const base = emptyAnswers();
+  return USE_MOCK_ANSWERS ? { ...base, ...mockAnswers } : base;
 }
 
 export function Questionnaire() {
@@ -21,11 +45,22 @@ export function Questionnaire() {
 
   useEffect(() => {
     const stored = loadAnswers();
-    setAnswers((current) => ({ ...current, ...stored }));
+    const hasStoredAnswers = Object.values(stored).some(
+      (value) => typeof value === "string" && value.trim().length > 0
+    );
+
+    if (hasStoredAnswers) {
+      setAnswers((current) => ({ ...current, ...stored }));
+    } else if (USE_MOCK_ANSWERS) {
+      saveAnswers(initialAnswers());
+    }
   }, []);
 
   const completion = useMemo(() => {
-    const filled = projectionQuestions.filter((question) => answers[question.id]?.trim().length).length;
+    const filled = projectionQuestions.filter(
+      (question) => answers[question.id]?.trim().length
+    ).length;
+
     return Math.round((filled / projectionQuestions.length) * 100);
   }, [answers]);
 
@@ -66,6 +101,7 @@ export function Questionnaire() {
       }
 
       const data = (await response.json()) as { success: boolean; result: unknown };
+
       if (!data.success) {
         setError("La projection est indisponible pour le moment. Merci de réessayer.");
         setLoading(false);
@@ -87,8 +123,12 @@ export function Questionnaire() {
           <span>Progression</span>
           <span>{completion}%</span>
         </div>
+
         <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-mist">
-          <div className="h-full rounded-full bg-ink transition-all" style={{ width: `${completion}%` }} />
+          <div
+            className="h-full rounded-full bg-ink transition-all"
+            style={{ width: `${completion}%` }}
+          />
         </div>
       </div>
 
@@ -96,6 +136,7 @@ export function Questionnaire() {
         {projectionQuestions.map((question) => (
           <label key={question.id} className="block">
             <span className="text-sm font-medium text-ink">{question.label}</span>
+
             <textarea
               value={answers[question.id] ?? ""}
               onChange={(event) => updateAnswer(question.id, event.target.value)}
