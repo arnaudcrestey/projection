@@ -9,10 +9,8 @@ export type ProjectionAnswers = Record<string, string>;
 
 export type ProjectionResult = {
   vision: string;
-  centralMessage: string;
-  userExperience: string;
-  recommendedEntryPoint: string;
-  closingNote: string;
+  clarity: string;
+  nextStep: string;
 };
 
 export type ProjectionApiResponse = {
