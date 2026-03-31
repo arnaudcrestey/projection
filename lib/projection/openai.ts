@@ -6,15 +6,11 @@ import type { ProjectionAnswers, ProjectionResult } from "@/lib/projection/types
 function parseModelResult(content: string): ProjectionResult | null {
   try {
     const parsed = JSON.parse(content) as ProjectionResult;
-    if (
-      parsed.vision &&
-      parsed.centralMessage &&
-      parsed.userExperience &&
-      parsed.recommendedEntryPoint &&
-      parsed.closingNote
-    ) {
+
+    if (parsed.vision && parsed.clarity && parsed.nextStep) {
       return parsed;
     }
+
     return null;
   } catch {
     return null;
@@ -32,8 +28,8 @@ export async function generateProjection(answers: ProjectionAnswers): Promise<Pr
 
     const completion = await client.responses.create({
       model: "gpt-4.1-mini",
-      temperature: 0.6,
-      input: prompt
+      temperature: 0.4,
+      input: prompt,
     });
 
     const text = completion.output_text?.trim();
