@@ -32,7 +32,13 @@ export function LeadForm({ projectionSnapshot }: LeadFormProps) {
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, organization, message, projectionSnapshot })
+        body: JSON.stringify({
+          fullName,
+          email,
+          organization,
+          message,
+          projectionSnapshot,
+        }),
       });
 
       if (!response.ok) {
@@ -49,55 +55,79 @@ export function LeadForm({ projectionSnapshot }: LeadFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="premium-panel mt-6 p-6 md:p-7">
-      <h3 className="text-lg font-semibold">Demander un échange ciblé</h3>
-      <p className="mt-2 text-sm text-slateSoft">
-        Si cette projection vous parle, laissez vos coordonnées. Vous recevrez une proposition d’échange
-        structurée.
-      </p>
+    <form
+      onSubmit={handleSubmit}
+      className="mt-7 rounded-[22px] border border-[#d7e0f0] bg-white/92 p-6 shadow-[0_18px_50px_rgba(22,48,100,0.05)] md:mt-8 md:rounded-[24px] md:p-8"
+    >
+      <div className="max-w-2xl">
+        <h3 className="text-[1.1rem] font-semibold leading-tight text-ink md:text-[1.3rem]">
+          Aller plus loin
+        </h3>
 
-      <div className="mt-6 grid gap-4">
+        <p className="mt-2 text-sm leading-relaxed text-slateSoft md:text-[15px]">
+          Si cette projection vous parle, vous pouvez me transmettre vos éléments.
+          Je vous reviens avec une proposition structurée.
+        </p>
+      </div>
+
+      <div className="mt-6 grid gap-4 md:mt-7">
         <input
           type="text"
           value={fullName}
           onChange={(event) => setFullName(event.target.value)}
           placeholder="Nom et prénom"
-          className="rounded-xl border border-mist bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-slateSoft"
+          className="min-h-[50px] rounded-[14px] border border-[#dbe3f1] bg-[#fbfcff] px-4 py-3 text-sm text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[54px] md:text-[15px]"
           required
         />
+
         <input
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email professionnel"
-          className="rounded-xl border border-mist bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-slateSoft"
+          className="min-h-[50px] rounded-[14px] border border-[#dbe3f1] bg-[#fbfcff] px-4 py-3 text-sm text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[54px] md:text-[15px]"
           required
         />
+
         <input
           type="text"
           value={organization}
           onChange={(event) => setOrganization(event.target.value)}
           placeholder="Structure (optionnel)"
-          className="rounded-xl border border-mist bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-slateSoft"
+          className="min-h-[50px] rounded-[14px] border border-[#dbe3f1] bg-[#fbfcff] px-4 py-3 text-sm text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[54px] md:text-[15px]"
         />
+
         <textarea
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder="Contexte complémentaire (optionnel)"
-          rows={4}
-          className="rounded-xl border border-mist bg-white px-4 py-3 text-sm outline-none ring-0 transition focus:border-slateSoft"
+          rows={5}
+          className="min-h-[128px] rounded-[14px] border border-[#dbe3f1] bg-[#fbfcff] px-4 py-3 text-sm leading-6 text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[148px] md:text-[15px] md:leading-7"
         />
       </div>
 
-      {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
+      {error ? (
+        <p className="mt-4 rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </p>
+      ) : null}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="mt-5 rounded-xl bg-ink px-5 py-3 text-sm font-medium text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {loading ? "Envoi en cours..." : "Envoyer ma demande"}
-      </button>
+      <div className="mt-6 flex justify-start">
+        <button
+          type="submit"
+          disabled={loading}
+          className="inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full bg-[#12253f] px-6 text-[13px] font-semibold text-white shadow-[0_14px_30px_rgba(18,37,63,0.16)] transition hover:translate-y-[-1px] hover:shadow-[0_18px_34px_rgba(18,37,63,0.2)] disabled:cursor-not-allowed disabled:opacity-60 md:min-h-[50px] md:px-7 md:text-[15px]"
+        >
+          {loading ? (
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />
+              <span>Envoi en cours...</span>
+            </>
+          ) : (
+            "Envoyer ma demande"
+          )}
+        </button>
+      </div>
     </form>
   );
 }
