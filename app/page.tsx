@@ -42,7 +42,7 @@ export default function HomePage() {
             </Link>
 
             <p className="text-sm text-slateSoft">
-              7 questions guidées · 3 minutes · rendu structuré
+              7 questions guidées · 3 minutes · sans inscription
             </p>
           </div>
         </div>
