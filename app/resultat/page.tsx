@@ -25,14 +25,19 @@ export default function ResultatPage() {
   }, []);
 
   return (
-    <PageFrame eyebrow="PROJECTION · RÉSULTAT">
+    <PageFrame>
       <section className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold md:text-4xl">Votre projection structurée</h1>
+          <h1 className="text-2xl font-semibold md:text-4xl">
+            Votre projection structurée
+          </h1>
+
           <p className="mt-3 text-sm leading-relaxed text-slateSoft md:text-base">
-            Une base claire pour positionner votre activité et orienter vos prochains arbitrages.
+            Une base claire pour positionner votre activité et orienter vos
+            prochains arbitrages.
           </p>
         </div>
+
         <Link
           href="/questions"
           className="rounded-xl border border-mist px-4 py-2 text-sm font-medium text-ink transition hover:bg-white"
