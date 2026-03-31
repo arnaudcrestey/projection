@@ -65,7 +65,7 @@ export function ResultCards({ result }: { result: ProjectionResult }) {
         />
 
         <Item
-          title="Point d’entrée recommandé"
+          title="Première étape proposée"
           content={result.recommendedEntryPoint}
           variant="accent"
         />
