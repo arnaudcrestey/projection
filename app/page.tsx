@@ -29,8 +29,8 @@ export default function HomePage() {
             Expliquez clairement ce que vous faites.
           </h1>
 
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-slateSoft md:text-[1.55rem]">
-            <span className="block">
+          <p className="mt-8 max-w-[46rem] text-lg leading-relaxed text-slateSoft md:text-[1.55rem]">
+            <span className="block whitespace-nowrap">
               Si votre activité n’est pas comprise rapidement, elle n’attire pas.
             </span>
             <span className="mt-2 block">
