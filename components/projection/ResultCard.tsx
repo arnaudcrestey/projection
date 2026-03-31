@@ -48,25 +48,21 @@ function Item({ title, content, variant = "default" }: ItemProps) {
   );
 }
 
-function buildClarityBlock(result: ProjectionResult) {
-  return `${result.centralMessage} ${result.userExperience}`;
-}
-
 export function ResultCards({ result }: { result: ProjectionResult }) {
   return (
     <div className="grid gap-4 md:gap-6">
-      <Item title="Vision clarifiée" content={result.vision} variant="hero" />
+      <Item title="Ce que vous faites" content={result.vision} variant="hero" />
 
       <div className="grid gap-4 md:grid-cols-[1.08fr_0.92fr] md:gap-6">
         <Item
-          title="Ce qu’il faut rendre évident"
-          content={buildClarityBlock(result)}
+          title="Ce que l’on doit comprendre"
+          content={result.clarity}
           variant="default"
         />
 
         <Item
-          title="Première étape proposée"
-          content={result.recommendedEntryPoint}
+          title="Comment commencer avec vous"
+          content={result.nextStep}
           variant="accent"
         />
       </div>
