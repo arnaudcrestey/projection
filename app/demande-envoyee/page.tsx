@@ -1,36 +1,25 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { PageFrame } from "@/components/projection/PageFrame";
 
-type PageFrameProps = {
-  children: ReactNode;
-  eyebrow?: string;
-};
-
-export function PageFrame({ children, eyebrow }: PageFrameProps) {
+export default function DemandeEnvoyeePage() {
   return (
-    <main className="min-h-screen bg-page px-4 py-6 md:px-6 md:py-8">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-8 flex items-start justify-between gap-4">
-          <div>
-            {eyebrow ? (
-              <p className="text-[11px] uppercase tracking-[0.28em] text-accent">
-                {eyebrow}
-              </p>
-            ) : null}
+    <PageFrame eyebrow="PROJECTION · DEMANDE ENVOYÉE">
+      <section className="premium-panel p-8 md:p-12">
+        <h1 className="text-2xl font-semibold md:text-4xl">Demande bien reçue.</h1>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slateSoft md:text-base">
+          Merci pour votre confiance. Votre demande a été transmise avec votre projection. Un retour structuré
+          vous sera adressé rapidement pour proposer la suite la plus pertinente.
+        </p>
 
-            <Link href="/" className="mt-2 inline-flex flex-col leading-none">
-              <span className="text-center font-serif text-2xl text-ink md:text-3xl">
-                AC
-              </span>
-              <span className="mt-1 text-[11px] tracking-[0.18em] text-slateSoft md:text-xs">
-                arnaudcrestey.com
-              </span>
-            </Link>
-          </div>
+        <div className="mt-8">
+          <Link
+            href="https://arnaudcrestey.com"
+            className="inline-flex rounded-xl bg-ink px-5 py-3 text-sm font-medium text-white"
+          >
+            Continuer sur arnaudcrestey.com
+          </Link>
         </div>
-
-        {children}
-      </div>
-    </main>
+      </section>
+    </PageFrame>
   );
 }
