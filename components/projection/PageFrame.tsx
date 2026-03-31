@@ -28,7 +28,7 @@ export function PageFrame({ children }: PageFrameProps) {
         </Link>
 
         <div className="shrink-0 pt-1">
-          <div className="inline-flex min-h-[38px] items-center rounded-full border border-[rgba(23,38,63,0.10)] bg-white/92 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#5d6f96] shadow-[0_8px_18px_rgba(23,38,63,0.04)] backdrop-blur">
+          <div className="inline-flex min-h-[32px] items-center rounded-full border border-[rgba(23,38,63,0.07)] bg-white/55 px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-[rgba(93,111,150,0.78)] shadow-[0_4px_12px_rgba(23,38,63,0.03)] backdrop-blur">
             Diagnostic premium
           </div>
         </div>
