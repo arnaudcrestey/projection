@@ -30,9 +30,12 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-slateSoft md:text-[1.55rem]">
-            Si votre activité n’est pas comprise rapidement, elle{" "}
-            <span className="whitespace-nowrap">n’attire pas.</span> En quelques
-            questions, mettez des mots simples sur ce que vous proposez.
+            <span className="block">
+              Si votre activité n’est pas comprise rapidement, elle n’attire pas.
+            </span>
+            <span className="mt-2 block">
+              En quelques questions, mettez des mots simples sur ce que vous proposez.
+            </span>
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
