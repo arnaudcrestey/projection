@@ -27,8 +27,8 @@ export function PageFrame({ children }: PageFrameProps) {
           <span className="mt-2 block h-px w-12 bg-[rgba(23,38,63,0.16)]" />
         </Link>
 
-        <div className="shrink-0 pt-1">
-          <div className="inline-flex min-h-[32px] items-center rounded-full border border-[rgba(23,38,63,0.07)] bg-white/55 px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-[rgba(93,111,150,0.78)] shadow-[0_4px_12px_rgba(23,38,63,0.03)] backdrop-blur">
+        <div className="shrink-0 pt-3">
+          <div className="inline-flex min-h-[28px] items-center rounded-full border border-[rgba(92,120,196,0.12)] bg-[rgba(255,255,255,0.42)] px-3.5 py-1 text-[9px] font-medium uppercase tracking-[0.24em] text-[rgba(92,120,196,0.82)] shadow-[0_2px_8px_rgba(92,120,196,0.05)] backdrop-blur">
             Diagnostic premium
           </div>
         </div>
