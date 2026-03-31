@@ -5,52 +5,53 @@ function clean(value?: string) {
 }
 
 export function buildProjectionPrompt(answers: ProjectionAnswers) {
-  return `Tu es consultant en clarté d’activité.
+  return `Tu dois reformuler une activité de manière simple.
 
-Ta mission :
-Aider une personne à formuler clairement ce qu’elle fait, de manière simple et compréhensible immédiatement.
+Règle absolue :
+Le texte doit être compris en 3 secondes.
 
-Objectif :
-Quelqu’un qui découvre cette activité doit comprendre en quelques secondes :
-- ce que fait la personne
-- pour qui
-- ce que ça apporte
-- comment commencer avec elle
+Si une phrase est trop longue → raccourcis.
+Si un mot est compliqué → remplace.
+Si une idée est inutile → supprime.
 
-Style attendu :
-- phrases courtes
-- mots simples
-- ton humain
-- zéro jargon
-- zéro effet “intelligent”
-- écriture naturelle, comme si tu expliquais à quelqu’un en face
+Tu écris comme si tu parlais à quelqu’un.
 
-Interdictions absolues :
-- mots comme : démarche, cadre, levier, positionnement, mise en œuvre, projection, transformation
+---
+
+Interdictions strictes :
 - phrases longues
-- formulations abstraites
+- jargon
+- mots abstraits
+- ton “expert”
 - répétitions
-- discours marketing
+- phrases compliquées
 
-Règles strictes :
+---
+
+Format obligatoire :
 - maximum 2 phrases par bloc
-- chaque phrase doit être comprise immédiatement
-- une seule idée par phrase
-- supprimer tout ce qui n’apporte pas de clarté
-- écrire pour quelqu’un qui ne connaît pas le sujet
+- phrases courtes
+- une idée par phrase
 
-Données utilisateur :
-- Activité : ${clean(answers.activity)}
-- Audience : ${clean(answers.audience)}
-- Compréhension attendue : ${clean(answers.immediateUnderstanding)}
-- Flou actuel : ${clean(answers.currentBlur)}
-- Impact attendu : ${clean(answers.impactOfClarity)}
-- Action naturelle : ${clean(answers.naturalAction)}
-- Impression visée : ${clean(answers.firstImpression)}
+---
 
-Tu dois produire UNIQUEMENT un JSON valide.
+Données :
 
-Format exact :
+Activité :
+${clean(answers.activity)}
+
+Audience :
+${clean(answers.audience)}
+
+Compréhension attendue :
+${clean(answers.immediateUnderstanding)}
+
+Action :
+${clean(answers.naturalAction)}
+
+---
+
+Tu produis UNIQUEMENT ce JSON :
 
 {
   "vision": "...",
@@ -58,27 +59,29 @@ Format exact :
   "nextStep": "..."
 }
 
+---
+
 Consignes :
 
-- "vision":
-Explique simplement ce que fait la personne et pour qui.
-Doit être compréhensible immédiatement.
+vision :
+Dire simplement ce que la personne fait et pour qui.
 
-- "clarity":
-Explique ce que quelqu’un doit comprendre en arrivant et ce qu’il peut faire ensuite.
-Reste concret.
+clarity :
+Dire ce qu’on doit comprendre immédiatement + ce que la personne peut faire.
 
-- "nextStep":
-Explique comment commencer simplement avec cette personne.
-Propose une action claire et naturelle.
+nextStep :
+Dire comment commencer simplement.
 
-Important :
-Chaque bloc doit pouvoir être lu en moins de 5 secondes.
+---
 
-Le résultat doit donner cette impression :
-"Ok, je comprends ce que fait cette personne et comment avancer."
+IMPORTANT :
 
-Retour :
-JSON strict, sans texte autour.
+Si tu écris une phrase de plus de 20 mots → c’est une erreur.
+
+Le résultat doit être simple, direct, humain.
+
+Pas intelligent. Pas complexe.
+
+Simple.
 `;
 }
