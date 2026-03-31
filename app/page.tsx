@@ -4,15 +4,15 @@ import { PageFrame } from "@/components/projection/PageFrame";
 const benefits = [
   {
     title: "Vision clarifiée",
-    text: "Une lecture plus claire de votre activité et de ce qu’elle donne réellement à comprendre.",
+    text: "Comprendre immédiatement ce que votre activité exprime",
   },
   {
     title: "Message plus lisible",
-    text: "Une structure plus cohérente, plus crédible et plus facile à saisir dès les premières secondes.",
+    text: "Être compris sans effort dès les premières secondes",
   },
   {
     title: "Base exploitable",
-    text: "Une direction concrète pour mieux présenter votre activité et engager la suite.",
+    text: "Savoir quoi dire et comment le présenter",
   },
 ];
 
@@ -22,7 +22,7 @@ export default function HomePage() {
       <section className="rounded-[34px] border border-[#dbe3f4] bg-white px-8 py-10 shadow-[0_18px_50px_rgba(61,95,214,0.07)] md:px-14 md:py-14">
         <div className="max-w-4xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.30em] text-[#3d5fd6]">
-            STRUCTURATION D&apos;ACTIVITÉ
+            CLARIFIER SON ACTIVITÉ
           </p>
 
           <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[0.98] tracking-[-0.04em] text-ink md:text-6xl">
@@ -55,17 +55,13 @@ export default function HomePage() {
             key={item.title}
             className="rounded-[24px] border border-[#dbe3f4] bg-white px-6 py-6 shadow-[0_12px_30px_rgba(61,95,214,0.05)]"
           >
-            <div className="flex items-start gap-4">
-              <div className="mt-1 h-2.5 w-2.5 rounded-full bg-[#3d5fd6]" />
-
-              <div>
-                <h2 className="text-[1.45rem] font-semibold tracking-[-0.02em] text-ink">
-                  {item.title}
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-slateSoft">
-                  {item.text}
-                </p>
-              </div>
+            <div>
+              <h2 className="text-[1.3rem] font-semibold tracking-[-0.02em] text-ink">
+                {item.title}
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-slateSoft">
+                {item.text}
+              </p>
             </div>
           </article>
         ))}
