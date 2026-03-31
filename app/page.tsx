@@ -18,23 +18,20 @@ const benefits = [
 
 export default function HomePage() {
   return (
-    <PageFrame
-      eyebrow="DIAGNOSTIC PREMIUM"
-      description="Une lecture claire pour structurer votre activité."
-    >
+    <PageFrame>
       <section className="rounded-[34px] border border-[#dbe3f4] bg-white px-8 py-10 shadow-[0_18px_50px_rgba(61,95,214,0.07)] md:px-14 md:py-14">
         <div className="max-w-4xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.30em] text-[#3d5fd6]">
-            DIAGNOSTIC STRATÉGIQUE
+            STRUCTURATION D&apos;ACTIVITÉ
           </p>
 
           <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[0.98] tracking-[-0.04em] text-ink md:text-6xl">
-            Rendez votre activité claire, cohérente et engageante.
+            Rendez votre activité claire et évidente à comprendre.
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-slateSoft md:text-[1.55rem]">
-            Projection vous aide à structurer ce que vous faites, pour que ce soit
-            compris immédiatement — et donne envie d’aller plus loin.
+            Structurez ce que vous faites pour que la bonne personne comprenne
+            immédiatement, se reconnaisse et ait envie d’aller plus loin.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -46,7 +43,7 @@ export default function HomePage() {
             </Link>
 
             <p className="text-sm text-slateSoft">
-              Gratuit • 7 questions guidées • 3 minutes
+              7 questions guidées · 3 minutes · rendu structuré
             </p>
           </div>
         </div>
