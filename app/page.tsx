@@ -4,7 +4,7 @@ import { PageFrame } from "@/components/projection/PageFrame";
 const benefits = [
   {
     title: "Vision clarifiée",
-    text: "Comprendre immédiatement ce que votre activité exprime",
+    text: "Lire immédiatement ce que votre activité exprime",
   },
   {
     title: "Message plus lisible",
@@ -42,7 +42,7 @@ export default function HomePage() {
             </Link>
 
             <p className="text-sm text-slateSoft">
-              7 questions guidées · 3 minutes · sans inscription
+              7 questions · 3 minutes · sans inscription
             </p>
           </div>
         </div>
