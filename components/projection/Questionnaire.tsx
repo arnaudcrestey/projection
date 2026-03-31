@@ -159,13 +159,20 @@ export function Questionnaire() {
           </p>
         ) : null}
 
-        <div className="pt-2 md:pt-3">
+        <div className="flex justify-center pt-2 md:pt-3">
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[linear-gradient(135deg,#2f63e9_0%,#2d58cf_100%)] px-5 text-[13px] font-semibold text-white shadow-[0_14px_28px_rgba(47,99,233,0.24)] transition hover:scale-[1.01] hover:shadow-[0_18px_34px_rgba(47,99,233,0.3)] disabled:cursor-not-allowed disabled:opacity-60 sm:min-h-[48px] sm:px-6 sm:text-sm md:min-h-[50px] md:px-7 md:text-[15px]"
+            className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(135deg,#2f63e9_0%,#2d58cf_100%)] px-6 text-[13px] font-semibold text-white shadow-[0_14px_28px_rgba(47,99,233,0.24)] transition hover:scale-[1.01] hover:shadow-[0_18px_34px_rgba(47,99,233,0.3)] disabled:cursor-not-allowed disabled:opacity-60 sm:min-h-[48px] sm:max-w-[240px] sm:text-sm md:min-h-[52px] md:max-w-[280px] md:px-8 md:text-[15px]"
           >
-            {loading ? "Traitement en cours..." : "Voir ma projection"}
+            {loading ? (
+              <>
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />
+                <span>Traitement en cours...</span>
+              </>
+            ) : (
+              "Voir ma projection"
+            )}
           </button>
         </div>
       </div>
