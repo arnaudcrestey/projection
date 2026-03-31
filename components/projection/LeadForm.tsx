@@ -57,21 +57,23 @@ export function LeadForm({ projectionSnapshot }: LeadFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative mt-7 overflow-hidden rounded-[24px] border border-[#dbe4f3] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(249,251,255,0.98)_100%)] p-5 shadow-[0_28px_80px_rgba(22,48,100,0.06)] md:mt-10 md:rounded-[26px] md:p-8"
+      className="relative mt-8 overflow-hidden rounded-[24px] border border-[#dbe4f3] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(249,251,255,0.98)_100%)] p-5 shadow-[0_28px_80px_rgba(22,48,100,0.06)] md:mt-10 md:rounded-[26px] md:p-8"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.9),transparent_32%)]" />
 
       <div className="relative">
         <div className="max-w-2xl">
-          <h3 className="text-[1.08rem] font-semibold leading-tight text-[#12253f] md:text-[1.4rem]">
-            Aller plus loin
+          <h3 className="text-[1.12rem] font-semibold leading-tight text-[#12253f] md:text-[1.45rem]">
+            Structurer votre activité
           </h3>
 
           <p className="mt-2 max-w-xl text-sm leading-6 text-[#6b80a4] md:text-[15px] md:leading-7">
-            Si cette projection vous parle, vous pouvez me transmettre vos éléments.
-            Je vous reviens avec une proposition structurée.
+            Cette projection pose une base claire.
+            Je peux vous aider à la rendre réellement compréhensible, cohérente et engageante.
           </p>
         </div>
+
+        <div className="mt-6 h-px w-full bg-[#e6ecf6]" />
 
         <div className="mt-6 grid gap-3 md:mt-7 md:gap-4">
           <input
@@ -127,7 +129,7 @@ export function LeadForm({ projectionSnapshot }: LeadFormProps) {
                 <span>Envoi en cours...</span>
               </>
             ) : (
-              "Envoyer ma demande"
+              "Faire le point sur mon activité"
             )}
           </button>
         </div>
