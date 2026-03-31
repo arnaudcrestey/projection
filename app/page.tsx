@@ -26,12 +26,11 @@ export default function HomePage() {
           </p>
 
           <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[0.98] tracking-[-0.04em] text-ink md:text-6xl">
-            Rendez votre activité claire et évidente à comprendre.
+            Expliquez clairement ce que vous faites.
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-slateSoft md:text-[1.55rem]">
-            Structurez ce que vous faites pour que la bonne personne comprenne
-            immédiatement, se reconnaisse et ait envie d’aller plus loin.
+            Si votre activité n’est pas comprise rapidement, elle n’attire pas. En quelques questions, mettez des mots simples sur ce que vous proposez.
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -39,7 +38,7 @@ export default function HomePage() {
               href="/questions"
               className="inline-flex min-h-[54px] items-center justify-center rounded-full bg-[#2f58c8] px-7 py-3 text-sm font-semibold text-white shadow-[0_16px_34px_rgba(47,88,200,0.28)] transition duration-200 hover:-translate-y-[1px] hover:shadow-[0_18px_40px_rgba(47,88,200,0.34)]"
             >
-              Clarifier mon activité
+              Faire le point sur mon activité
             </Link>
 
             <p className="text-sm text-slateSoft">
