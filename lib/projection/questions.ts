@@ -3,7 +3,7 @@ import type { ProjectionQuestion } from "@/lib/projection/types";
 export const projectionQuestions: ProjectionQuestion[] = [
   {
     id: "activity",
-    label: "Quelle est l’activité que vous développez aujourd’hui ?",
+    label: "Quelle activité développez-vous aujourd’hui ?",
     placeholder: "Décrivez votre activité avec vos mots, même si elle vous semble encore incomplète.",
     minLength: 20
   },
@@ -33,7 +33,7 @@ export const projectionQuestions: ProjectionQuestion[] = [
   },
   {
     id: "naturalAction",
-    label: "Que devrait faire naturellement une personne intéressée après vous avoir découvert ? ?",
+    label: "Que devrait faire naturellement une personne intéressée après vous avoir découvert ?",
     placeholder: "Indiquez l’action simple et logique que vous souhaitez faciliter.",
     minLength: 20
   },
