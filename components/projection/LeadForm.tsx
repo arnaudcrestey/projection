@@ -16,14 +16,12 @@ type FormState = {
   firstName: string;
   email: string;
   activity: string;
-  details: string;
 };
 
 const initialState: FormState = {
   firstName: "",
   email: "",
   activity: "",
-  details: "",
 };
 
 export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
@@ -58,7 +56,6 @@ export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
           firstName: form.firstName.trim(),
           email: form.email.trim(),
           activity: form.activity.trim(),
-          details: form.details.trim(),
           answers,
           projectionSnapshot,
         }),
@@ -121,7 +118,9 @@ export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
                 <input
                   type="text"
                   value={form.firstName}
-                  onChange={(event) => updateField("firstName", event.target.value)}
+                  onChange={(event) =>
+                    updateField("firstName", event.target.value)
+                  }
                   placeholder="Ex. Arnaud Crestey"
                   className="min-h-[54px] w-full rounded-[16px] border border-[#d9e3f2] bg-white px-4 text-[14px] text-[#17304f] shadow-[inset_0_1px_2px_rgba(15,23,42,0.02)] outline-none transition placeholder:text-[#9aacbf] focus:border-[#b7c9e8] focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[56px] md:text-[15px]"
                   required
@@ -156,19 +155,6 @@ export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
               />
             </label>
 
-            <label className="block">
-              <span className="mb-2 block text-[12px] font-medium text-[#5e7397] md:text-[13px]">
-                Ce que vous souhaitez clarifier
-              </span>
-              <textarea
-                value={form.details}
-                onChange={(event) => updateField("details", event.target.value)}
-                placeholder="Expliquez en quelques lignes ce qui vous semble encore flou, ce que vous voulez améliorer, ou ce que vous attendez."
-                rows={5}
-                className="min-h-[150px] w-full resize-y rounded-[18px] border border-[#d9e3f2] bg-white px-4 py-3.5 text-[14px] leading-7 text-[#17304f] shadow-[inset_0_1px_2px_rgba(15,23,42,0.02)] outline-none transition placeholder:text-[#9aacbf] focus:border-[#b7c9e8] focus:ring-4 focus:ring-[#eaf1ff] md:px-5 md:py-4 md:text-[15px]"
-              />
-            </label>
-
             {error ? (
               <p className="rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error}
@@ -182,7 +168,9 @@ export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
                   disabled={loading}
                   className="inline-flex min-h-[50px] w-full items-center justify-center rounded-full bg-[linear-gradient(135deg,#2f63e9_0%,#2d58cf_100%)] px-7 text-[14px] font-semibold tracking-[0.01em] text-white shadow-[0_16px_34px_rgba(47,99,233,0.24)] transition hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(47,99,233,0.3)] disabled:cursor-not-allowed disabled:opacity-60 sm:max-w-[320px] md:min-h-[54px] md:px-8 md:text-[15px]"
                 >
-                  {loading ? "Envoi en cours..." : "Recevoir un retour sur mon activité"}
+                  {loading
+                    ? "Envoi en cours..."
+                    : "Recevoir un retour sur mon activité"}
                 </button>
 
                 <p className="max-w-xl text-center text-[12px] leading-6 text-[#7b8dab] md:text-[13px]">
