@@ -220,10 +220,6 @@ export function Questionnaire() {
               )}
             </button>
 
-            <p className="max-w-xl text-[12px] leading-6 text-[#8a99b1] sm:text-[13px]">
-              Vous passez ensuite à une lecture synthétique de votre activité,
-              avec une formulation plus claire de ce qu’elle exprime.
-            </p>
           </div>
         </div>
       </div>
