@@ -10,19 +10,19 @@ const USE_MOCK_ANSWERS = true;
 
 const mockAnswers: ProjectionAnswers = {
   activity:
-    "J’accompagne des personnes qui se sentent perdues ou en perte de repères à retrouver de la clarté, à mieux comprendre leur situation et à avancer de manière plus structurée dans leur vie personnelle et professionnelle.",
+    "Je conçois des expériences numériques qui aident des professionnels à rendre leur offre plus lisible, plus engageante et plus facile à transformer en prises de contact qualifiées.",
   audience:
-    "Des personnes en transition, en doute ou en blocage, qui cherchent à retrouver du sens, de la confiance et une direction plus claire dans leur vie.",
+    "Des indépendants, consultants, formateurs et experts qui ont une vraie valeur, mais qui peinent à la faire comprendre rapidement sur leur site ou leurs supports.",
   immediateUnderstanding:
-    "Je vous aide à comprendre ce que vous traversez et à le transformer en un plan d’action clair, adapté et concret.",
+    "En arrivant sur mon univers, la personne doit comprendre en quelques secondes ce que je fais, à qui cela s’adresse et en quoi cela peut l’aider concrètement.",
   currentBlur:
-    "Mon activité reste difficile à comprendre rapidement : les bénéfices ne sont pas assez explicites, la méthode n’est pas suffisamment structurée et le positionnement reste trop large.",
+    "Aujourd’hui, mon activité donne une impression intéressante mais encore trop diffuse : le visiteur perçoit des compétences, sans toujours identifier clairement l’offre, le bénéfice immédiat ni le bon prochain pas.",
   impactOfClarity:
-    "Je pourrais attirer les bonnes personnes, expliquer plus simplement mon accompagnement et générer davantage de demandes qualifiées.",
+    "Avec un positionnement plus net, je pourrais rassurer plus vite, mieux filtrer les bons profils et augmenter naturellement la qualité des demandes entrantes.",
   naturalAction:
-    "Prendre contact facilement, comprendre rapidement mon approche, puis réserver un premier échange ou un accompagnement.",
+    "Découvrir une page ou un diagnostic pertinent, se reconnaître dans la problématique présentée, puis demander un échange ou une recommandation adaptée.",
   firstImpression:
-    "Une impression de sérieux, de clarté et de confiance, avec une approche humaine mais structurée et orientée vers des résultats concrets.",
+    "Une impression de maîtrise, de finesse et de modernité, avec un cadre professionnel haut de gamme, accessible, rassurant et réellement structuré.",
 };
 
 function emptyAnswers(): ProjectionAnswers {
