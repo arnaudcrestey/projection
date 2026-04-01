@@ -6,6 +6,12 @@ type ItemProps = {
   variant?: "hero" | "default" | "accent" | "soft";
 };
 
+type ProjectionAngle =
+  | "digital"
+  | "accompagnement"
+  | "expertise"
+  | "generic";
+
 function Item({ title, content, variant = "default" }: ItemProps) {
   const shell =
     "relative overflow-hidden rounded-[22px] border shadow-[0_24px_70px_rgba(22,48,100,0.055)]";
@@ -52,55 +58,114 @@ function Item({ title, content, variant = "default" }: ItemProps) {
   );
 }
 
-function buildImpactText(result: ProjectionResult) {
-  const source = `${result.vision} ${result.clarity} ${result.nextStep}`.toLowerCase();
-
-  if (
-    source.includes("offre") ||
-    source.includes("comprendre") ||
-    source.includes("lisible") ||
-    source.includes("claire")
-  ) {
-    return "Quand une activité n’est pas comprise rapidement, elle suscite de l’intérêt sans déclencher naturellement de prise de contact.";
-  }
-
-  if (
-    source.includes("diagnostic") ||
-    source.includes("positionnement") ||
-    source.includes("point d’entrée") ||
-    source.includes("point d'entree")
-  ) {
-    return "Sans point d’entrée clair, les bonnes personnes peuvent s’intéresser à votre activité sans voir immédiatement comment aller plus loin.";
-  }
-
-  return "Quand le message reste partiellement flou, les visiteurs perçoivent l’intention sans toujours comprendre pourquoi ils devraient vous contacter.";
+function normalize(text: string) {
+  return text.toLowerCase();
 }
 
-function buildImprovementText(result: ProjectionResult) {
-  const source = `${result.vision} ${result.clarity} ${result.nextStep}`.toLowerCase();
+function includesOneOf(text: string, values: string[]) {
+  return values.some((value) => text.includes(value));
+}
+
+function detectAngle(result: ProjectionResult): ProjectionAngle {
+  const source = normalize(
+    `${result.vision} ${result.clarity} ${result.nextStep}`
+  );
 
   if (
-    source.includes("diagnostic") ||
-    source.includes("audit") ||
-    source.includes("analyse")
+    includesOneOf(source, [
+      "page",
+      "pages",
+      "diagnostic",
+      "diagnostics",
+      "dispositif",
+      "dispositifs",
+      "point d’entrée",
+      "point d'entree",
+      "offre",
+      "prise de contact",
+      "site",
+      "parcours",
+      "digital",
+      "digitaux",
+      "numérique",
+      "numerique",
+    ])
   ) {
-    return "Un diagnostic ciblé permet d’identifier ce qui freine la compréhension et de clarifier le bon point d’entrée pour la suite.";
+    return "digital";
   }
 
   if (
-    source.includes("page") ||
-    source.includes("dispositif") ||
-    source.includes("parcours")
+    includesOneOf(source, [
+      "situation",
+      "transition",
+      "doute",
+      "blocage",
+      "recul",
+      "direction",
+      "personne",
+      "personnes",
+      "accompagnement",
+    ])
   ) {
-    return "Un travail de clarification sur la page, le message et le parcours permet de rendre l’ensemble plus lisible et plus engageant.";
+    return "accompagnement";
   }
 
-  return "Un travail de clarification permet de rendre votre activité plus compréhensible, plus cohérente et plus simple à engager.";
+  if (
+    includesOneOf(source, [
+      "expert",
+      "experts",
+      "consultant",
+      "consultants",
+      "formateur",
+      "formateurs",
+      "professionnel",
+      "professionnels",
+      "expertise",
+      "activité",
+    ])
+  ) {
+    return "expertise";
+  }
+
+  return "generic";
+}
+
+function buildImpactText(angle: ProjectionAngle) {
+  switch (angle) {
+    case "digital":
+      return "Quand une offre n’est pas comprise rapidement, elle peut susciter de l’intérêt sans déclencher naturellement de prise de contact.";
+
+    case "accompagnement":
+      return "Quand l’activité reste difficile à saisir, les personnes concernées peuvent se reconnaître dans l’intention sans comprendre clairement pourquoi aller plus loin.";
+
+    case "expertise":
+      return "Quand une expertise n’est pas formulée de manière nette, elle peut paraître sérieuse sans devenir immédiatement lisible ni engageante pour les bons profils.";
+
+    default:
+      return "Quand le message reste partiellement flou, les visiteurs perçoivent l’intention sans comprendre immédiatement pourquoi ils devraient vous contacter.";
+  }
+}
+
+function buildImprovementText(angle: ProjectionAngle) {
+  switch (angle) {
+    case "digital":
+      return "Un diagnostic ciblé permet d’identifier ce qui freine la compréhension et de clarifier le bon point d’entrée pour la suite.";
+
+    case "accompagnement":
+      return "Un travail de clarification permet de rendre l’approche plus lisible, plus rassurante et plus simple à engager pour les personnes concernées.";
+
+    case "expertise":
+      return "Un travail de formulation et de structure permet de rendre l’expertise plus compréhensible et d’aider les bons profils à se reconnaître plus vite.";
+
+    default:
+      return "Un travail de clarification permet de rendre l’activité plus compréhensible, plus cohérente et plus simple à engager.";
+  }
 }
 
 export function ResultCards({ result }: { result: ProjectionResult }) {
-  const impactText = buildImpactText(result);
-  const improvementText = buildImprovementText(result);
+  const angle = detectAngle(result);
+  const impactText = buildImpactText(angle);
+  const improvementText = buildImprovementText(angle);
 
   return (
     <div className="grid gap-4 md:gap-6">
