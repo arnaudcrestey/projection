@@ -1,59 +1,92 @@
-import OpenAI from "openai";
-import { buildFallbackProjection } from "@/lib/projection/fallback";
-import { buildProjectionPrompt } from "@/lib/projection/prompt";
-import type { ProjectionAnswers, ProjectionResult } from "@/lib/projection/types";
+import type { ProjectionAnswers } from "@/lib/projection/types";
 
-function parseModelResult(content: string): ProjectionResult | null {
-  try {
-    const parsed = JSON.parse(content) as ProjectionResult;
-
-    if (parsed.vision && parsed.clarity && parsed.nextStep) {
-      return parsed;
-    }
-
-    return null;
-  } catch {
-    return null;
-  }
+function clean(value?: string) {
+  return value?.trim() ?? "";
 }
 
-function cleanText(text: string) {
-  return text
-    .replace(/\s+/g, " ")
-    .trim()
-    .replace(/\.{2,}/g, ".")
-    .replace(/ ,/g, ",");
+export function buildProjectionPrompt(answers: ProjectionAnswers) {
+  return `Tu dois reformuler une activité de manière simple et claire.
+
+OBJECTIF :
+Quelqu’un doit comprendre en 3 secondes :
+- ce que fait la personne
+- pour qui
+- ce que ça apporte
+- comment commencer
+
+---
+
+RÈGLES STRICTES :
+
+- 1 ou 2 phrases maximum par bloc
+- phrases courtes
+- mots simples
+- ton naturel
+- pas de jargon
+- pas de répétition
+
+---
+
+INTERDICTIONS :
+
+- ne pas copier les phrases utilisateur
+- pas de langage marketing
+- pas de mots abstraits
+- pas de phrases longues
+- pas de structure compliquée
+
+---
+
+DONNÉES :
+
+Activité :
+${clean(answers.activity)}
+
+Audience :
+${clean(answers.audience)}
+
+Compréhension :
+${clean(answers.immediateUnderstanding)}
+
+Action :
+${clean(answers.naturalAction)}
+
+---
+
+FORMAT JSON OBLIGATOIRE :
+
+{
+  "vision": "...",
+  "clarity": "...",
+  "nextStep": "..."
 }
 
-export async function generateProjection(
-  answers: ProjectionAnswers
-): Promise<ProjectionResult> {
-  if (!process.env.OPENAI_API_KEY) {
-    return buildFallbackProjection(answers);
-  }
+---
 
-  try {
-    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const prompt = buildProjectionPrompt(answers);
+CONSINGES :
 
-    const completion = await client.responses.create({
-      model: "gpt-4.1-mini",
-      temperature: 0.4,
-      input: prompt,
-    });
+vision :
+Dire clairement ce que fait la personne et pour qui.
 
-    const text = completion.output_text?.trim();
-    if (!text) return buildFallbackProjection(answers);
+clarity :
+Dire ce qu’on comprend immédiatement et ce qu’on peut faire.
 
-    const parsed = parseModelResult(text);
-    if (!parsed) return buildFallbackProjection(answers);
+nextStep :
+Donner une première étape simple et naturelle.
 
-    return {
-      vision: cleanText(parsed.vision).slice(0, 180),
-      clarity: cleanText(parsed.clarity).slice(0, 180),
-      nextStep: cleanText(parsed.nextStep).slice(0, 140),
-    };
-  } catch {
-    return buildFallbackProjection(answers);
-  }
+---
+
+IMPORTANT :
+
+Chaque bloc doit être compris instantanément.
+
+Si c’est trop long, raccourcis.
+Si c’est flou, simplifie.
+Si c’est inutile, supprime.
+
+Résultat attendu :
+"Ok, j’ai compris."
+
+Rien de plus.
+`;
 }
