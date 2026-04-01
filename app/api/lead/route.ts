@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { sendProjectionLeadEmail } from "@/lib/projection/mailer";
+import {
+  sendProjectionLeadEmail,
+  sendUserAutoReplyEmail,
+} from "@/lib/projection/mailer";
 import type { ProjectionResult } from "@/lib/projection/types";
 
 type LeadRequest = {
@@ -43,12 +46,19 @@ export async function POST(request: Request) {
       );
     }
 
+    const projectionSnapshot = body.projectionSnapshot ?? null;
+
     await sendProjectionLeadEmail({
       firstName,
       email,
       activity,
       details,
-      projectionSnapshot: body.projectionSnapshot ?? null,
+      projectionSnapshot,
+    });
+
+    await sendUserAutoReplyEmail({
+      firstName,
+      email,
     });
 
     return NextResponse.json({ success: true });
