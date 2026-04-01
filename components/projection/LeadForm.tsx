@@ -8,21 +8,37 @@ type LeadFormProps = {
   projectionSnapshot: ProjectionResult;
 };
 
+type FormState = {
+  firstName: string;
+  email: string;
+  activity: string;
+  details: string;
+};
+
+const initialState: FormState = {
+  firstName: "",
+  email: "",
+  activity: "",
+  details: "",
+};
+
 export function LeadForm({ projectionSnapshot }: LeadFormProps) {
   const router = useRouter();
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [organization, setOrganization] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState<string | null>(null);
+
+  const [form, setForm] = useState<FormState>(initialState);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm((current) => ({ ...current, [key]: value }));
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
 
-    if (!fullName.trim() || !email.trim()) {
-      setError("Merci d’indiquer votre nom et votre email professionnel.");
+    if (!form.firstName.trim() || !form.email.trim()) {
+      setError("Merci de renseigner au minimum votre prénom et votre email.");
       return;
     }
 
@@ -31,109 +47,147 @@ export function LeadForm({ projectionSnapshot }: LeadFormProps) {
     try {
       const response = await fetch("/api/lead", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          fullName,
-          email,
-          organization,
-          message,
+          firstName: form.firstName.trim(),
+          email: form.email.trim(),
+          activity: form.activity.trim(),
+          details: form.details.trim(),
           projectionSnapshot,
         }),
       });
 
       if (!response.ok) {
-        setError("L’envoi n’a pas pu être finalisé. Vous pouvez réessayer dans quelques instants.");
+        setError("L’envoi n’a pas pu être finalisé. Merci de réessayer.");
+        setLoading(false);
         return;
       }
 
       router.push("/demande-envoyee");
     } catch {
       setError("Une erreur technique est survenue. Merci de réessayer.");
-    } finally {
       setLoading(false);
     }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="relative mt-8 overflow-hidden rounded-[24px] border border-[#dbe4f3] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(249,251,255,0.98)_100%)] p-5 shadow-[0_28px_80px_rgba(22,48,100,0.06)] md:mt-10 md:rounded-[26px] md:p-8"
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.9),transparent_32%)]" />
+    <section className="mt-10 md:mt-14">
+      <div className="relative overflow-hidden rounded-[28px] border border-[#d9e4f5] bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(247,250,255,0.98)_100%)] px-5 py-6 shadow-[0_28px_80px_rgba(20,45,95,0.06)] sm:px-6 sm:py-7 md:px-8 md:py-9">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.88),transparent_30%)]" />
 
-      <div className="relative">
-        <div className="max-w-2xl">
-          <h3 className="text-[1.12rem] font-semibold leading-tight text-[#12253f] md:text-[1.45rem]">
-            Structurer votre activité
-          </h3>
+        <div className="relative">
+          <div className="max-w-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#6b81a8] md:text-[11px]">
+              Aller plus loin
+            </p>
 
-          <p className="mt-2 max-w-xl text-sm leading-6 text-[#6b80a4] md:text-[15px] md:leading-7">
-            Cette projection pose une base claire.
-            Je peux vous aider à la rendre réellement compréhensible, cohérente et engageante.
-          </p>
-        </div>
+            <h2 className="mt-3 text-[24px] font-semibold leading-tight text-[#102b52] md:text-[34px] md:leading-[1.12]">
+              Clarifier ce qui freine vraiment votre activité
+            </h2>
 
-        <div className="mt-6 h-px w-full bg-[#e6ecf6]" />
+            <p className="mt-3 text-[14px] leading-7 text-[#5d7399] md:text-[16px] md:leading-8">
+              Ce premier diagnostic pose une base utile. Si vous voulez aller plus loin,
+              je peux vous aider à rendre votre activité plus lisible, plus cohérente
+              et plus simple à engager.
+            </p>
 
-        <div className="mt-6 grid gap-3 md:mt-7 md:gap-4">
-          <input
-            type="text"
-            value={fullName}
-            onChange={(event) => setFullName(event.target.value)}
-            placeholder="Nom et prénom"
-            className="min-h-[50px] rounded-[15px] border border-[#dbe3f1] bg-white/92 px-4 py-3 text-sm text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#edf3ff] md:min-h-[54px] md:px-5 md:text-[15px]"
-            required
-          />
+            <div className="mt-4 flex flex-wrap gap-2.5">
+              <span className="inline-flex items-center rounded-full border border-[#d9e4f5] bg-white/80 px-3 py-1.5 text-[12px] font-medium text-[#5b74a0]">
+                Réponse personnalisée
+              </span>
+              <span className="inline-flex items-center rounded-full border border-[#d9e4f5] bg-white/80 px-3 py-1.5 text-[12px] font-medium text-[#5b74a0]">
+                Sans engagement
+              </span>
+              <span className="inline-flex items-center rounded-full border border-[#d9e4f5] bg-white/80 px-3 py-1.5 text-[12px] font-medium text-[#5b74a0]">
+                Retour clair et concret
+              </span>
+            </div>
+          </div>
 
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="Email professionnel"
-            className="min-h-[50px] rounded-[15px] border border-[#dbe3f1] bg-white/92 px-4 py-3 text-sm text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#edf3ff] md:min-h-[54px] md:px-5 md:text-[15px]"
-            required
-          />
+          <div className="my-7 h-px bg-[linear-gradient(90deg,rgba(201,214,237,0.2)_0%,rgba(201,214,237,0.9)_18%,rgba(201,214,237,0.9)_82%,rgba(201,214,237,0.2)_100%)] md:my-8" />
 
-          <input
-            type="text"
-            value={organization}
-            onChange={(event) => setOrganization(event.target.value)}
-            placeholder="Structure (optionnel)"
-            className="min-h-[50px] rounded-[15px] border border-[#dbe3f1] bg-white/92 px-4 py-3 text-sm text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#edf3ff] md:min-h-[54px] md:px-5 md:text-[15px]"
-          />
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+            <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+              <label className="block">
+                <span className="mb-2 block text-[12px] font-medium text-[#5e7397] md:text-[13px]">
+                  Nom et prénom
+                </span>
+                <input
+                  type="text"
+                  value={form.firstName}
+                  onChange={(event) => updateField("firstName", event.target.value)}
+                  placeholder="Ex. Arnaud Crestey"
+                  className="min-h-[52px] w-full rounded-[16px] border border-[#d9e3f2] bg-white px-4 text-[14px] text-[#17304f] outline-none transition placeholder:text-[#9aacbf] focus:border-[#b7c9e8] focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[56px] md:text-[15px]"
+                  required
+                />
+              </label>
 
-          <textarea
-            value={message}
-            onChange={(event) => setMessage(event.target.value)}
-            placeholder="Contexte complémentaire (optionnel)"
-            rows={4}
-            className="min-h-[128px] rounded-[15px] border border-[#dbe3f1] bg-white/92 px-4 py-3 text-sm leading-6 text-[#17304f] outline-none transition placeholder:text-[#9aa8bf] focus:border-[#b8c8e6] focus:bg-white focus:ring-4 focus:ring-[#edf3ff] md:min-h-[150px] md:px-5 md:text-[15px] md:leading-7"
-          />
-        </div>
+              <label className="block">
+                <span className="mb-2 block text-[12px] font-medium text-[#5e7397] md:text-[13px]">
+                  Email professionnel
+                </span>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  placeholder="Ex. bonjour@votresite.fr"
+                  className="min-h-[52px] w-full rounded-[16px] border border-[#d9e3f2] bg-white px-4 text-[14px] text-[#17304f] outline-none transition placeholder:text-[#9aacbf] focus:border-[#b7c9e8] focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[56px] md:text-[15px]"
+                  required
+                />
+              </label>
+            </div>
 
-        {error ? (
-          <p className="mt-4 rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            {error}
-          </p>
-        ) : null}
+            <label className="block">
+              <span className="mb-2 block text-[12px] font-medium text-[#5e7397] md:text-[13px]">
+                Votre activité
+              </span>
+              <input
+                type="text"
+                value={form.activity}
+                onChange={(event) => updateField("activity", event.target.value)}
+                placeholder="Ex. Conseil, accompagnement, formation, activité digitale..."
+                className="min-h-[52px] w-full rounded-[16px] border border-[#d9e3f2] bg-white px-4 text-[14px] text-[#17304f] outline-none transition placeholder:text-[#9aacbf] focus:border-[#b7c9e8] focus:ring-4 focus:ring-[#eaf1ff] md:min-h-[56px] md:text-[15px]"
+              />
+            </label>
 
-        <div className="mt-7 flex justify-center md:mt-8">
-          <button
-            type="submit"
-            disabled={loading}
-            className="inline-flex min-h-[50px] w-full max-w-[280px] items-center justify-center gap-2 rounded-full bg-[linear-gradient(135deg,#3b6cf0_0%,#2e5dd5_100%)] px-6 text-[13px] font-semibold text-white shadow-[0_18px_36px_rgba(47,99,233,0.24)] transition hover:translate-y-[-1px] hover:shadow-[0_22px_42px_rgba(47,99,233,0.3)] disabled:cursor-not-allowed disabled:opacity-60 md:min-h-[54px] md:max-w-[320px] md:px-8 md:text-[15px]"
-          >
-            {loading ? (
-              <>
-                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />
-                <span>Envoi en cours...</span>
-              </>
-            ) : (
-              "Faire le point sur mon activité"
-            )}
-          </button>
+            <label className="block">
+              <span className="mb-2 block text-[12px] font-medium text-[#5e7397] md:text-[13px]">
+                Ce que vous souhaitez clarifier
+              </span>
+              <textarea
+                value={form.details}
+                onChange={(event) => updateField("details", event.target.value)}
+                placeholder="Expliquez en quelques lignes ce qui vous semble encore flou, ce que vous voulez améliorer, ou ce que vous attendez."
+                rows={5}
+                className="min-h-[138px] w-full resize-y rounded-[18px] border border-[#d9e3f2] bg-white px-4 py-3.5 text-[14px] leading-7 text-[#17304f] outline-none transition placeholder:text-[#9aacbf] focus:border-[#b7c9e8] focus:ring-4 focus:ring-[#eaf1ff] md:px-5 md:py-4 md:text-[15px]"
+              />
+            </label>
+
+            {error ? (
+              <p className="rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+              </p>
+            ) : null}
+
+            <div className="flex flex-col items-center gap-3 pt-2 md:pt-3">
+              <button
+                type="submit"
+                disabled={loading}
+                className="inline-flex min-h-[50px] items-center justify-center rounded-full bg-[linear-gradient(135deg,#2f63e9_0%,#2d58cf_100%)] px-7 text-[14px] font-semibold text-white shadow-[0_16px_34px_rgba(47,99,233,0.24)] transition hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(47,99,233,0.3)] disabled:cursor-not-allowed disabled:opacity-60 md:min-h-[54px] md:px-8 md:text-[15px]"
+              >
+                {loading ? "Envoi en cours..." : "Recevoir un retour sur mon activité"}
+              </button>
+
+              <p className="max-w-xl text-center text-[12px] leading-6 text-[#7b8dab] md:text-[13px]">
+                Vous recevez un retour personnalisé pour voir si un travail de clarification
+                plus poussé peut réellement vous être utile.
+              </p>
+            </div>
+          </form>
         </div>
       </div>
-    </form>
+    </section>
   );
 }
