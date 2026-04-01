@@ -90,13 +90,11 @@ export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
             </div>
 
             <h2 className="mt-4 text-[24px] font-semibold leading-tight tracking-[-0.035em] text-[#102b52] sm:text-[28px] md:text-[34px] md:leading-[1.1]">
-              Clarifier ce qui freine vraiment votre activité
+              Obtenir un retour personnalisé sur mon activité
             </h2>
 
             <p className="mt-4 text-[14px] leading-7 text-[#5d7399] md:text-[16px] md:leading-8">
-              Ce premier diagnostic pose une base utile. Si vous voulez aller
-              plus loin, je peux vous aider à rendre votre activité plus lisible,
-              plus cohérente et plus simple à engager.
+              Ce premier diagnostic pose une base claire. Si vous souhaitez aller plus loin, je peux vous accompagner pour rendre votre activité plus lisible et plus facile à comprendre pour les bonnes personnes.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2.5">
