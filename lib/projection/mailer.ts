@@ -9,7 +9,6 @@ type SendProjectionLeadEmailParams = {
   firstName: string;
   email: string;
   activity?: string;
-  details?: string;
   answers?: ProjectionAnswers;
   projectionSnapshot?: ProjectionResult | null;
 };
@@ -107,7 +106,6 @@ function buildProjectionHtml({
   firstName,
   email,
   activity,
-  details,
   answers,
   projectionSnapshot,
 }: SendProjectionLeadEmailParams) {
@@ -130,8 +128,7 @@ function buildProjectionHtml({
         <div style="margin:0 0 24px; padding:18px 20px; background:#f8fbff; border:1px solid #e3eaf5; border-radius:16px;">
           <p style="margin:0 0 8px;"><strong>Prénom :</strong> ${escapeHtml(firstName)}</p>
           <p style="margin:0 0 8px;"><strong>Email :</strong> ${escapeHtml(email)}</p>
-          <p style="margin:0 0 8px;"><strong>Activité :</strong> ${escapeHtml(activity || "Non renseignée")}</p>
-          <p style="margin:0;"><strong>Détails :</strong><br/>${escapeHtml(details || "Non renseignés")}</p>
+          <p style="margin:0;"><strong>Activité :</strong> ${escapeHtml(activity || "Non renseignée")}</p>
         </div>
 
         <h2 style="margin:0 0 12px; font-size:18px; color:#173b73;">Réponses du questionnaire</h2>
@@ -173,7 +170,6 @@ function buildProjectionText({
   firstName,
   email,
   activity,
-  details,
   answers,
   projectionSnapshot,
 }: SendProjectionLeadEmailParams) {
@@ -185,7 +181,6 @@ Nouveau lead Projection
 Prénom : ${firstName}
 Email : ${email}
 Activité : ${activity || "Non renseignée"}
-Détails : ${details || "Non renseignés"}
 
 Réponses du questionnaire :
 ${answersText}
