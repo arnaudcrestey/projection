@@ -1,5 +1,13 @@
 import { NextResponse } from "next/server";
-import type { LeadRequest } from "@/lib/projection/types";
+import type { ProjectionResult } from "@/lib/projection/types";
+
+type LeadRequest = {
+  firstName?: string;
+  email?: string;
+  activity?: string;
+  details?: string;
+  projectionSnapshot?: ProjectionResult | null;
+};
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -9,27 +17,38 @@ export async function POST(request: Request) {
   try {
     const body = (await request.json()) as LeadRequest;
 
-    if (!body.fullName?.trim() || !body.email?.trim()) {
+    const firstName = body.firstName?.trim() ?? "";
+    const email = body.email?.trim() ?? "";
+    const activity = body.activity?.trim() ?? "";
+    const details = body.details?.trim() ?? "";
+
+    if (!firstName || !email) {
       return NextResponse.json(
-        { success: false, error: "Nom et email sont obligatoires." },
+        {
+          success: false,
+          error: "Le prénom et l’email sont obligatoires.",
+        },
         { status: 400 }
       );
     }
 
-    if (!isValidEmail(body.email.trim())) {
+    if (!isValidEmail(email)) {
       return NextResponse.json(
-        { success: false, error: "Adresse email invalide." },
+        {
+          success: false,
+          error: "Adresse email invalide.",
+        },
         { status: 400 }
       );
     }
 
     const payload = {
       receivedAt: new Date().toISOString(),
-      fullName: body.fullName.trim(),
-      email: body.email.trim(),
-      organization: body.organization?.trim() || null,
-      message: body.message?.trim() || null,
-      projectionSnapshot: body.projectionSnapshot ?? null
+      firstName,
+      email,
+      activity: activity || null,
+      details: details || null,
+      projectionSnapshot: body.projectionSnapshot ?? null,
     };
 
     console.info("[projection:lead]", JSON.stringify(payload));
@@ -39,7 +58,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: "Envoi indisponible pour le moment."
+        error: "Envoi indisponible pour le moment.",
       },
       { status: 500 }
     );
