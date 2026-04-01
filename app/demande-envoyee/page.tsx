@@ -35,9 +35,7 @@ export default function DemandeEnvoyeePage() {
             </h1>
 
             <p className="mt-4 text-[15px] leading-8 text-[#5c7297] md:text-[17px]">
-              Votre message a bien été reçu. Je reviendrai vers vous avec un
-              retour clair, structuré et utile pour voir ce qui mérite
-              réellement d’être clarifié.
+              Votre message a bien été reçu. 
             </p>
 
             <div className="mt-6 rounded-[20px] border border-[#e1e8f4] bg-white/75 px-5 py-5 text-left shadow-[0_12px_30px_rgba(30,58,110,0.04)] md:px-6 md:py-6">
