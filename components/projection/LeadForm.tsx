@@ -2,10 +2,14 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { ProjectionResult } from "@/lib/projection/types";
+import type {
+  ProjectionAnswers,
+  ProjectionResult,
+} from "@/lib/projection/types";
 
 type LeadFormProps = {
   projectionSnapshot: ProjectionResult;
+  answers?: ProjectionAnswers;
 };
 
 type FormState = {
@@ -22,7 +26,7 @@ const initialState: FormState = {
   details: "",
 };
 
-export function LeadForm({ projectionSnapshot }: LeadFormProps) {
+export function LeadForm({ projectionSnapshot, answers }: LeadFormProps) {
   const router = useRouter();
 
   const [form, setForm] = useState<FormState>(initialState);
@@ -55,6 +59,7 @@ export function LeadForm({ projectionSnapshot }: LeadFormProps) {
           email: form.email.trim(),
           activity: form.activity.trim(),
           details: form.details.trim(),
+          answers,
           projectionSnapshot,
         }),
       });
