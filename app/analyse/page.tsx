@@ -15,20 +15,20 @@ export default function AnalysePage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setStep((current) => Math.min(current + 1, milestones.length - 1));
-    }, 1100);
+ useEffect(() => {
+  const interval = window.setInterval(() => {
+    setStep((current) => Math.min(current + 1, milestones.length - 1));
+  }, 1600);
 
-    const timeout = window.setTimeout(() => {
-      router.push("/resultat");
-    }, 4800);
+  const timeout = window.setTimeout(() => {
+    router.push("/resultat");
+  }, 7600);
 
-    return () => {
-      window.clearInterval(interval);
-      window.clearTimeout(timeout);
-    };
-  }, [router]);
+  return () => {
+    window.clearInterval(interval);
+    window.clearTimeout(timeout);
+  };
+}, [router]);
 
   return (
     <PageFrame>
