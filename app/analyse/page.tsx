@@ -15,14 +15,14 @@ export default function AnalysePage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
 
- useEffect(() => {
+useEffect(() => {
   const interval = window.setInterval(() => {
     setStep((current) => Math.min(current + 1, milestones.length - 1));
-  }, 1600);
+  }, 2200);
 
   const timeout = window.setTimeout(() => {
     router.push("/resultat");
-  }, 7600);
+  }, 11800);
 
   return () => {
     window.clearInterval(interval);
