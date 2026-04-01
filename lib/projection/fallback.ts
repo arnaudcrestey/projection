@@ -22,7 +22,7 @@ function getAudience(answers: ProjectionAnswers) {
       "formateur",
     ])
   ) {
-    return "des indépendants, consultants et professionnels";
+    return "des indépendants, consultants, formateurs et experts";
   }
 
   if (
@@ -35,7 +35,7 @@ function getAudience(answers: ProjectionAnswers) {
       "sens",
     ])
   ) {
-    return "des personnes qui traversent une phase de doute, de transition ou de blocage";
+    return "des personnes en transition, en doute ou en phase de blocage";
   }
 
   return "des personnes qui ont besoin d’y voir plus clair";
@@ -54,9 +54,10 @@ function getVision(answers: ProjectionAnswers) {
       "diagnostic",
       "page",
       "digital",
+      "interface",
     ])
   ) {
-    return `Vous concevez des pages, diagnostics ou parcours digitaux pour ${audience}, afin de rendre leur activité plus claire et plus facile à comprendre.`;
+    return `Vous concevez des pages, diagnostics et parcours pour ${audience}, afin de rendre leur offre plus claire et plus facile à comprendre.`;
   }
 
   if (
@@ -68,15 +69,15 @@ function getVision(answers: ProjectionAnswers) {
       "direction",
     ])
   ) {
-    return `Vous apportez un cadre clair à ${audience}, pour les aider à mieux comprendre leur situation et à retrouver une direction plus lisible.`;
+    return `Vous apportez un cadre clair à ${audience} pour mieux comprendre une situation et retrouver une direction plus lisible.`;
   }
 
-  return `Vous intervenez auprès de ${audience} pour rendre une situation plus claire, plus lisible et plus simple à faire avancer.`;
+  return `Vous aidez ${audience} à rendre une situation plus claire, plus lisible et plus simple à faire avancer.`;
 }
 
 function getClarity(answers: ProjectionAnswers) {
   const immediate = clean(answers.immediateUnderstanding).toLowerCase();
-  const action = clean(answers.naturalAction).toLowerCase();
+  const activity = clean(answers.activity).toLowerCase();
 
   if (
     containsOneOf(immediate, [
@@ -90,39 +91,38 @@ function getClarity(answers: ProjectionAnswers) {
       "benefice",
     ])
   ) {
-    return "On comprend rapidement ce que vous proposez, à qui cela s’adresse et ce que cela peut apporter concrètement.";
+    return "On comprend rapidement ce que vous proposez, à qui cela s’adresse et pourquoi cela mérite l’attention.";
   }
 
   if (
-    containsOneOf(action, [
-      "contact",
-      "échange",
-      "echange",
+    containsOneOf(activity, [
+      "numérique",
+      "numerique",
+      "site",
+      "page",
+      "parcours",
       "diagnostic",
-      "premier échange",
-      "premier echange",
+      "interface",
     ])
   ) {
-    return "Votre activité doit être perçue comme claire, sérieuse et simple à engager, avec une première étape naturelle pour aller plus loin.";
+    return "On comprend rapidement que vous structurez une présence plus lisible, plus cohérente et plus simple à engager.";
   }
 
-  return "Votre activité doit se comprendre vite, inspirer confiance et donner envie d’engager une première démarche simple.";
+  return "On comprend rapidement la nature de votre approche, ce qu’elle apporte et la manière d’aller plus loin.";
 }
 
 function getNextStep(answers: ProjectionAnswers) {
   const action = clean(answers.naturalAction).toLowerCase();
   const blur = clean(answers.currentBlur).toLowerCase();
 
-  if (
-    containsOneOf(action, ["diagnostic", "analyse", "audit"])
-  ) {
+  if (containsOneOf(action, ["diagnostic", "analyse", "audit"])) {
     return "La première étape peut être un diagnostic ciblé pour repérer ce qui mérite d’être clarifié avant d’aller plus loin.";
   }
 
   if (
     containsOneOf(action, ["échange", "echange", "contact", "rendez-vous", "rdv"])
   ) {
-    return "La première étape peut être un échange simple pour poser les bases, clarifier le besoin et voir comment avancer dans le bon sens.";
+    return "La première étape peut être un échange simple pour clarifier l’essentiel et poser une base plus nette pour la suite.";
   }
 
   if (
