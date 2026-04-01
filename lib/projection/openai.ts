@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { buildFallbackProjection } from "@/lib/projection/fallback";
 import { buildProjectionPrompt } from "@/lib/projection/prompt";
+import { refineProjection } from "@/lib/projection/refine";
 import type { ProjectionAnswers, ProjectionResult } from "@/lib/projection/types";
 
 function normalizeResult(value: unknown): ProjectionResult | null {
@@ -22,6 +23,15 @@ function normalizeResult(value: unknown): ProjectionResult | null {
   };
 }
 
+function tryParseJson(content: string): ProjectionResult | null {
+  try {
+    const parsed = JSON.parse(content);
+    return normalizeResult(parsed);
+  } catch {
+    return null;
+  }
+}
+
 function extractJsonObject(content: string): ProjectionResult | null {
   const trimmed = content.trim();
 
@@ -41,15 +51,6 @@ function extractJsonObject(content: string): ProjectionResult | null {
   }
 
   return null;
-}
-
-function tryParseJson(content: string): ProjectionResult | null {
-  try {
-    const parsed = JSON.parse(content);
-    return normalizeResult(parsed);
-  } catch {
-    return null;
-  }
 }
 
 export async function generateProjection(
@@ -114,7 +115,12 @@ export async function generateProjection(
     }
 
     const parsed = extractJsonObject(text);
-    return parsed ?? buildFallbackProjection(answers);
+
+    if (parsed) {
+      return refineProjection(parsed);
+    }
+
+    return buildFallbackProjection(answers);
   } catch {
     return buildFallbackProjection(answers);
   }
