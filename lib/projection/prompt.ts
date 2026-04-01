@@ -5,33 +5,52 @@ function clean(value?: string) {
 }
 
 export function buildProjectionPrompt(answers: ProjectionAnswers) {
-  return `Tu dois reformuler une activité de manière simple.
+  return `Tu dois reformuler une activité de manière simple et claire.
 
-Règle absolue :
-Le texte doit être compris en 3 secondes.
+Objectif :
+Quelqu’un qui découvre cette activité doit comprendre en quelques secondes :
+- ce que fait la personne
+- pour qui
+- ce que ça apporte
+- comment commencer
 
-Si une phrase est trop longue → raccourcis.
-Si un mot est compliqué → remplace.
-Si une idée est inutile → supprime.
+---
 
-Tu écris comme si tu parlais à quelqu’un.
+Règles absolues :
+
+- Tu ne dois PAS reprendre les phrases telles quelles
+- Tu dois reformuler avec tes propres mots
+- Tu dois simplifier les idées
+- Tu dois supprimer tout ce qui est inutile
+
+---
+
+Style :
+
+- phrases courtes
+- mots simples
+- ton naturel
+- pas de jargon
+- pas de langage “intelligent”
 
 ---
 
 Interdictions strictes :
+
+- copier les phrases utilisateur
 - phrases longues
-- jargon
+- répétitions
 - mots abstraits
 - ton “expert”
-- répétitions
-- phrases compliquées
+- structures compliquées
 
 ---
 
 Format obligatoire :
+
 - maximum 2 phrases par bloc
-- phrases courtes
-- une idée par phrase
+- 1 idée par phrase
+- phrases courtes (15 mots max idéalement)
 
 ---
 
@@ -61,27 +80,32 @@ Tu produis UNIQUEMENT ce JSON :
 
 ---
 
-Consignes :
+Consignes précises :
 
 vision :
-Dire simplement ce que la personne fait et pour qui.
+Explique clairement ce que fait la personne et pour qui.
+Ne copie pas les phrases.
+Simplifie.
 
 clarity :
-Dire ce qu’on doit comprendre immédiatement + ce que la personne peut faire.
+Explique ce que l’on doit comprendre immédiatement et ce que la personne peut faire.
+Sois concret.
 
 nextStep :
-Dire comment commencer simplement.
+Explique comment commencer simplement.
+Propose une action naturelle.
 
 ---
 
 IMPORTANT :
 
-Si tu écris une phrase de plus de 20 mots → c’est une erreur.
+Chaque bloc doit être lisible en moins de 5 secondes.
 
-Le résultat doit être simple, direct, humain.
+Si une phrase est inutile → supprime-la.
 
-Pas intelligent. Pas complexe.
+Le résultat doit donner :
+"Ok, j’ai compris."
 
-Simple.
+Pas plus.
 `;
 }
