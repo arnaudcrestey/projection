@@ -58,12 +58,15 @@ function extractJsonObject(content: string): ProjectionResult | null {
   return null;
 }
 
-function finalizeProjection(result: ProjectionResult): ProjectionResult {
-  return enhanceProjection(refineProjection(result));
+function finalizeProjection(
+  result: ProjectionResult,
+  answers: ProjectionAnswers
+): ProjectionResult {
+  return enhanceProjection(refineProjection(result), answers);
 }
 
 function buildSafeFallback(answers: ProjectionAnswers): ProjectionResult {
-  return finalizeProjection(buildFallbackProjection(answers));
+  return finalizeProjection(buildFallbackProjection(answers), answers);
 }
 
 export async function generateProjection(
@@ -103,10 +106,10 @@ export async function generateProjection(
             {
               type: "input_text",
               text:
-                "Tu reformules des activités de manière claire, premium, crédible et naturelle. " +
-                "Tu écris en français. Tu évites le jargon d’agence, le ton marketing, les phrases génériques, " +
-                "les tournures floues et les formulations trop artificielles. " +
-                "Tu privilégies la netteté, la tenue, la simplicité et la qualité perçue.",
+                "Tu reformules des activités de manière claire, crédible et naturelle. " +
+                "Tu écris en français. Tu évites le jargon d’agence, le ton marketing, " +
+                "les phrases génériques, les tournures floues et les formulations artificielles. " +
+                "Tu privilégies la netteté, la simplicité, la précision et l’utilité.",
             },
           ],
         },
@@ -134,7 +137,7 @@ export async function generateProjection(
       return buildSafeFallback(answers);
     }
 
-    return finalizeProjection(parsed);
+    return finalizeProjection(parsed, answers);
   } catch {
     return buildSafeFallback(answers);
   }
