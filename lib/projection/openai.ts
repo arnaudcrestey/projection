@@ -57,7 +57,7 @@ export async function generateProjection(
   answers: ProjectionAnswers
 ): Promise<ProjectionResult> {
   if (!process.env.OPENAI_API_KEY) {
-    return buildFallbackProjection(answers);
+    return refineProjection(buildFallbackProjection(answers));
   }
 
   try {
@@ -111,7 +111,7 @@ export async function generateProjection(
 
     const text = completion.output_text?.trim();
     if (!text) {
-      return buildFallbackProjection(answers);
+      return refineProjection(buildFallbackProjection(answers));
     }
 
     const parsed = extractJsonObject(text);
@@ -120,8 +120,8 @@ export async function generateProjection(
       return refineProjection(parsed);
     }
 
-    return buildFallbackProjection(answers);
+    return refineProjection(buildFallbackProjection(answers));
   } catch {
-    return buildFallbackProjection(answers);
+    return refineProjection(buildFallbackProjection(answers));
   }
 }
