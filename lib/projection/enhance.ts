@@ -59,48 +59,66 @@ function isWeakNextStep(text: string) {
 function rewriteVision(text: string) {
   const cleaned = normalize(text);
 
-  if (!isWeakVision(cleaned)) {
+  if (cleaned.length > 85 && !isWeakVision(cleaned)) {
     return cleaned;
+  }
+
+  if (
+    includesOneOf(cleaned, [
+      "page",
+      "pages",
+      "diagnostic",
+      "diagnostics",
+      "parcours",
+      "dispositif",
+      "dispositifs",
+      "point d’entrée",
+      "points d’entrée",
+      "point d'entree",
+      "points d'entree",
+    ])
+  ) {
+    return "Vous concevez des pages, diagnostics et dispositifs qui rendent une offre plus claire, plus lisible et plus facile à comprendre.";
   }
 
   if (
     includesOneOf(cleaned, [
       "interface numérique",
       "interfaces numériques",
-      "page",
-      "pages",
-      "diagnostic",
-      "parcours",
+      "numérique",
+      "numerique",
+      "digital",
+      "digitaux",
     ])
   ) {
-    return "Vous concevez des pages, diagnostics et parcours pour des indépendants et experts qui ont besoin de rendre leur offre plus claire et plus facile à comprendre.";
+    return "Vous concevez des pages et dispositifs digitaux qui rendent une offre immédiatement plus claire et plus simple à comprendre.";
   }
 
-  return "Vous rendez une offre plus lisible, plus claire et plus simple à comprendre pour les personnes auxquelles elle s’adresse.";
+  return "Vous rendez une offre plus claire, plus lisible et plus facile à comprendre pour les personnes auxquelles elle s’adresse.";
 }
 
 function rewriteClarity(text: string) {
   const cleaned = normalize(text);
 
-  if (!isWeakClarity(cleaned)) {
+  if (cleaned.length > 85 && !isWeakClarity(cleaned)) {
     return cleaned;
   }
 
-  return "On comprend rapidement ce que vous proposez, à qui cela s’adresse et pourquoi cela donne envie de vous contacter.";
+  return "On comprend rapidement ce que vous proposez, à qui cela s’adresse et pourquoi cela mérite qu’on s’y intéresse.";
 }
 
 function rewriteNextStep(text: string) {
   const cleaned = normalize(text);
 
-  if (!isWeakNextStep(cleaned)) {
+  if (cleaned.length > 85 && !isWeakNextStep(cleaned)) {
     return cleaned;
   }
 
   if (includesOneOf(cleaned, ["diagnostic", "audit", "analyse"])) {
-    return "La première étape peut être un diagnostic ciblé pour repérer ce qui mérite d’être clarifié avant d’aller plus loin.";
+    return "La première étape peut être un diagnostic ciblé pour identifier ce qui freine la compréhension et clarifier le bon point d’entrée.";
   }
 
-  if (includesOneOf(cleaned, ["page", "dédiée", "dediee"])) {
+  if (includesOneOf(cleaned, ["page", "dédiée", "dediee", "point d’entrée", "point d'entree"])) {
     return "La première étape peut être une page ou un point d’entrée dédié pour clarifier le positionnement et orienter la suite.";
   }
 
