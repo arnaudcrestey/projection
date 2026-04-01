@@ -6,33 +6,21 @@ function pick(answers: ProjectionAnswers, key: string, fallback: string) {
 }
 
 export function buildFallbackProjection(answers: ProjectionAnswers): ProjectionResult {
-  const activity = pick(
-    answers,
-    "activity",
-    "vous accompagnez des personnes à mieux comprendre leur situation"
-  );
-
   const audience = pick(
     answers,
     "audience",
-    "des personnes qui ont besoin d’y voir plus clair"
+    "des personnes en transition ou en doute"
   );
 
   const immediateUnderstanding = pick(
     answers,
     "immediateUnderstanding",
-    "vous les aidez à clarifier ce qu’elles vivent et à avancer plus concrètement"
-  );
-
-  const action = pick(
-    answers,
-    "naturalAction",
-    "prendre un premier échange pour faire le point"
+    "vous les aidez à clarifier leur situation et à avancer plus concrètement"
   );
 
   return {
-    vision: `Vous accompagnez ${audience}. Votre activité consiste à ${activity}.`,
-    clarity: `On doit comprendre rapidement que ${immediateUnderstanding}. La personne doit pouvoir ${action}.`,
+    vision: `Vous accompagnez ${audience}. Vous les aidez à y voir plus clair et à retrouver une direction.`,
+    clarity: `On doit comprendre rapidement que ${immediateUnderstanding}. La personne doit pouvoir prendre contact simplement pour faire le point.`,
     nextStep: `La première étape peut être un échange simple pour faire le point sur la situation et voir comment vous pouvez aider.`,
   };
 }
