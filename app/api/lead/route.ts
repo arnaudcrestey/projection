@@ -25,6 +25,7 @@ export async function POST(request: Request) {
     const email = body.email?.trim() ?? "";
     const activity = body.activity?.trim() ?? "";
     const details = body.details?.trim() ?? "";
+    const projectionSnapshot = body.projectionSnapshot ?? null;
 
     if (!firstName || !email) {
       return NextResponse.json(
@@ -45,8 +46,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    const projectionSnapshot = body.projectionSnapshot ?? null;
 
     await sendProjectionLeadEmail({
       firstName,
