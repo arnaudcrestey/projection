@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { buildFallbackProjection } from "@/lib/projection/fallback";
 import { buildProjectionPrompt } from "@/lib/projection/prompt";
+import { enhanceProjection } from "@/lib/projection/enhance";
 import { refineProjection } from "@/lib/projection/refine";
 import type { ProjectionAnswers, ProjectionResult } from "@/lib/projection/types";
 
@@ -8,9 +9,13 @@ function normalizeResult(value: unknown): ProjectionResult | null {
   if (!value || typeof value !== "object") return null;
 
   const candidate = value as Record<string, unknown>;
-  const vision = typeof candidate.vision === "string" ? candidate.vision.trim() : "";
-  const clarity = typeof candidate.clarity === "string" ? candidate.clarity.trim() : "";
-  const nextStep = typeof candidate.nextStep === "string" ? candidate.nextStep.trim() : "";
+
+  const vision =
+    typeof candidate.vision === "string" ? candidate.vision.trim() : "";
+  const clarity =
+    typeof candidate.clarity === "string" ? candidate.clarity.trim() : "";
+  const nextStep =
+    typeof candidate.nextStep === "string" ? candidate.nextStep.trim() : "";
 
   if (!vision || !clarity || !nextStep) {
     return null;
@@ -53,11 +58,19 @@ function extractJsonObject(content: string): ProjectionResult | null {
   return null;
 }
 
+function finalizeProjection(result: ProjectionResult): ProjectionResult {
+  return enhanceProjection(refineProjection(result));
+}
+
+function buildSafeFallback(answers: ProjectionAnswers): ProjectionResult {
+  return finalizeProjection(buildFallbackProjection(answers));
+}
+
 export async function generateProjection(
   answers: ProjectionAnswers
 ): Promise<ProjectionResult> {
   if (!process.env.OPENAI_API_KEY) {
-    return refineProjection(buildFallbackProjection(answers));
+    return buildSafeFallback(answers);
   }
 
   try {
@@ -110,18 +123,19 @@ export async function generateProjection(
     });
 
     const text = completion.output_text?.trim();
+
     if (!text) {
-      return refineProjection(buildFallbackProjection(answers));
+      return buildSafeFallback(answers);
     }
 
     const parsed = extractJsonObject(text);
 
-    if (parsed) {
-      return refineProjection(parsed);
+    if (!parsed) {
+      return buildSafeFallback(answers);
     }
 
-    return refineProjection(buildFallbackProjection(answers));
+    return finalizeProjection(parsed);
   } catch {
-    return refineProjection(buildFallbackProjection(answers));
+    return buildSafeFallback(answers);
   }
 }
