@@ -1,52 +1,110 @@
 import type { ProjectionResult } from "@/lib/projection/types";
 
-function isWeak(text: string) {
-  const lower = text.toLowerCase();
+function normalize(text: string) {
+  return text.replace(/\s+/g, " ").replace(/\.\s*\./g, ".").trim();
+}
 
-  return (
-    lower.includes("j’aide") ||
-    lower.includes("vous aide") ||
-    lower.includes("message") ||
-    lower.includes("valeur") ||
-    lower.includes("agir") ||
-    lower.includes("accompagne") ||
-    lower.includes("permet") ||
-    lower.includes("accessible") ||
-    lower.includes("attractif") ||
-    lower.includes("sans hésitation")
-  );
+function includesOneOf(text: string, patterns: string[]) {
+  const lower = text.toLowerCase();
+  return patterns.some((pattern) => lower.includes(pattern));
+}
+
+function isWeakVision(text: string) {
+  return includesOneOf(text, [
+    "j’aide",
+    "je aide",
+    "vous aide",
+    "accompagne",
+    "permet",
+    "accessible",
+    "attractif",
+    "message",
+    "valeur",
+    "agir",
+    "sans hésitation",
+    "interface numérique",
+    "interfaces numériques",
+  ]);
+}
+
+function isWeakClarity(text: string) {
+  return includesOneOf(text, [
+    "j’aide",
+    "vous aide",
+    "message",
+    "valeur",
+    "agir",
+    "accessible",
+    "attractif",
+    "sans hésitation",
+    "vous découvrez",
+    "vous découvrirez",
+    "vous pourrez",
+    "vous allez",
+  ]);
+}
+
+function isWeakNextStep(text: string) {
+  return includesOneOf(text, [
+    "consultez",
+    "demandez",
+    "évaluez",
+    "évaluer",
+    "commencez par",
+    "diagnostic simple",
+    "communication actuelle",
+  ]);
 }
 
 function rewriteVision(text: string) {
-  if (isWeak(text)) {
-    return text
-      .replace(/j[’']aide.*?/, "")
-      .replace(/vous aide.*?/, "")
-      .replace(/afin de/gi, "pour")
-      .replace(/faciliter/gi, "simplifier")
-      .trim();
+  const cleaned = normalize(text);
+
+  if (!isWeakVision(cleaned)) {
+    return cleaned;
   }
 
-  return text;
+  if (
+    includesOneOf(cleaned, [
+      "interface numérique",
+      "interfaces numériques",
+      "page",
+      "pages",
+      "diagnostic",
+      "parcours",
+    ])
+  ) {
+    return "Vous concevez des pages, diagnostics et parcours pour des indépendants et experts qui ont besoin de rendre leur offre plus claire et plus facile à comprendre.";
+  }
+
+  return "Vous rendez une offre plus lisible, plus claire et plus simple à comprendre pour les personnes auxquelles elle s’adresse.";
 }
 
 function rewriteClarity(text: string) {
-  if (isWeak(text)) {
-    return "On comprend rapidement ce que vous proposez, à qui cela s’adresse et pourquoi cela donne envie d’aller plus loin.";
+  const cleaned = normalize(text);
+
+  if (!isWeakClarity(cleaned)) {
+    return cleaned;
   }
 
-  return text;
+  return "On comprend rapidement ce que vous proposez, à qui cela s’adresse et pourquoi cela donne envie de vous contacter.";
 }
 
 function rewriteNextStep(text: string) {
-  if (isWeak(text)) {
-    return text
-      .replace(/consultez/gi, "La première étape peut être")
-      .replace(/demandez/gi, "ou demander")
-      .trim();
+  const cleaned = normalize(text);
+
+  if (!isWeakNextStep(cleaned)) {
+    return cleaned;
   }
 
-  return text;
+  if (includesOneOf(cleaned, ["diagnostic", "audit", "analyse"])) {
+    return "La première étape peut être un diagnostic ciblé pour repérer ce qui mérite d’être clarifié avant d’aller plus loin.";
+  }
+
+  if (includesOneOf(cleaned, ["page", "dédiée", "dediee"])) {
+    return "La première étape peut être une page ou un point d’entrée dédié pour clarifier le positionnement et orienter la suite.";
+  }
+
+  return "La première étape peut être un échange simple pour clarifier l’essentiel et poser une base plus nette pour la suite.";
 }
 
 export function enhanceProjection(result: ProjectionResult): ProjectionResult {
