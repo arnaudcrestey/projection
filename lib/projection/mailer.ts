@@ -198,7 +198,7 @@ function buildUserAutoReplyHtml({ firstName }: SendUserAutoReplyEmailParams) {
                 </p>
 
                 <p style="margin:0 0 16px; font-size:15px; line-height:1.8; color:#52617f;">
-                  J’ai bien reçu les éléments transmis via le diagnostic stratégique.
+                  J’ai bien reçu les éléments transmis via le diagnostic.
                 </p>
 
                 <p style="margin:0 0 22px; font-size:15px; line-height:1.8; color:#52617f;">
@@ -234,7 +234,7 @@ function buildUserAutoReplyText({ firstName }: SendUserAutoReplyEmailParams) {
     "",
     "Merci pour votre demande.",
     "",
-    "J’ai bien reçu les éléments transmis via le diagnostic stratégique.",
+    "J’ai bien reçu les éléments transmis via le diagnostic.",
     "",
     "Je vais reprendre votre situation avec attention afin d’en dégager les points essentiels, puis vous adresser un retour personnalisé.",
     "",
