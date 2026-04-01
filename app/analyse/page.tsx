@@ -34,12 +34,11 @@ export default function AnalysePage() {
     <PageFrame>
       <section className="premium-panel p-8 md:p-12">
         <h1 className="text-2xl font-semibold md:text-4xl">
-          Traitement de votre projection
+          Analyse en cours de vos réponses
         </h1>
 
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slateSoft md:text-base">
-          Votre réponse est consolidée pour produire une restitution claire,
-          structurée et directement exploitable.
+          Vos réponses sont analysées pour produire une restitution claire, structurée et immédiatement exploitable.
         </p>
 
         <div className="mt-8 grid gap-3">
