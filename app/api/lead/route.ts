@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendProjectionLeadEmail } from "@/lib/projection/mailer";
 import type { ProjectionResult } from "@/lib/projection/types";
 
 type LeadRequest = {
@@ -42,19 +43,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const payload = {
-      receivedAt: new Date().toISOString(),
+    await sendProjectionLeadEmail({
       firstName,
       email,
-      activity: activity || null,
-      details: details || null,
+      activity,
+      details,
       projectionSnapshot: body.projectionSnapshot ?? null,
-    };
-
-    console.info("[projection:lead]", JSON.stringify(payload));
+    });
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error("[projection:lead:error]", error);
+
     return NextResponse.json(
       {
         success: false,
