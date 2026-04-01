@@ -2,6 +2,7 @@ export type ProjectionQuestion = {
   id: string;
   label: string;
   placeholder: string;
+  hint?: string;
   minLength?: number;
 };
 
