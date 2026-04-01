@@ -66,7 +66,12 @@ export default function ResultatPage() {
         </Link>
       </div>
 
-      {result ? <LeadForm projectionSnapshot={result} /> : null}
+      {result ? (
+        <LeadForm
+          projectionSnapshot={result}
+          answers={answers ?? undefined}
+        />
+      ) : null}
     </PageFrame>
   );
 }
