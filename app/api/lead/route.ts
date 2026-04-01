@@ -12,7 +12,6 @@ type LeadRequest = {
   firstName?: string;
   email?: string;
   activity?: string;
-  details?: string;
   answers?: ProjectionAnswers;
   projectionSnapshot?: ProjectionResult | null;
 };
@@ -28,7 +27,6 @@ export async function POST(request: Request) {
     const firstName = body.firstName?.trim() ?? "";
     const email = body.email?.trim() ?? "";
     const activity = body.activity?.trim() ?? "";
-    const details = body.details?.trim() ?? "";
     const answers = body.answers ?? {};
     const projectionSnapshot = body.projectionSnapshot ?? null;
 
@@ -56,7 +54,6 @@ export async function POST(request: Request) {
       firstName,
       email,
       activity,
-      details,
       answers,
       projectionSnapshot,
     });
