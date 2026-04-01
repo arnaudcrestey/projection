@@ -1,11 +1,16 @@
 import nodemailer from "nodemailer";
-import type { ProjectionResult } from "@/lib/projection/types";
+import { projectionQuestions } from "@/lib/projection/questions";
+import type {
+  ProjectionAnswers,
+  ProjectionResult,
+} from "@/lib/projection/types";
 
 type SendProjectionLeadEmailParams = {
   firstName: string;
   email: string;
   activity?: string;
   details?: string;
+  answers?: ProjectionAnswers;
   projectionSnapshot?: ProjectionResult | null;
 };
 
@@ -20,6 +25,16 @@ function escapeHtml(value: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function formatFirstName(firstName: string) {
+  return firstName
+    .trim()
+    .split("-")
+    .map((part) =>
+      part ? part.charAt(0).toUpperCase() + part.slice(1).toLowerCase() : part
+    )
+    .join("-");
 }
 
 function createTransporter() {
@@ -43,16 +58,63 @@ function createTransporter() {
   });
 }
 
+function buildAnswersHtml(answers?: ProjectionAnswers) {
+  const items = projectionQuestions
+    .map((question) => {
+      const value = answers?.[question.id]?.trim();
+
+      if (!value) return "";
+
+      return `
+        <div style="padding:16px 18px; background:#fbfdff; border:1px solid #e3eaf5; border-radius:14px;">
+          <p style="margin:0 0 8px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#6f83a7; font-weight:700;">
+            ${escapeHtml(question.label)}
+          </p>
+          <p style="margin:0; white-space:pre-line;">${escapeHtml(value)}</p>
+        </div>
+      `;
+    })
+    .filter(Boolean)
+    .join("");
+
+  if (!items) {
+    return `
+      <div style="padding:16px 18px; background:#fbfdff; border:1px solid #e3eaf5; border-radius:14px;">
+        <p style="margin:0; color:#6f83a7;">Aucune réponse détaillée transmise.</p>
+      </div>
+    `;
+  }
+
+  return items;
+}
+
+function buildAnswersText(answers?: ProjectionAnswers) {
+  const items = projectionQuestions
+    .map((question) => {
+      const value = answers?.[question.id]?.trim();
+
+      if (!value) return "";
+
+      return `${question.label}\n${value}`;
+    })
+    .filter(Boolean)
+    .join("\n\n");
+
+  return items || "Aucune réponse détaillée transmise.";
+}
+
 function buildProjectionHtml({
   firstName,
   email,
   activity,
   details,
+  answers,
   projectionSnapshot,
 }: SendProjectionLeadEmailParams) {
   const vision = projectionSnapshot?.vision ?? "Non renseigné";
   const clarity = projectionSnapshot?.clarity ?? "Non renseigné";
   const nextStep = projectionSnapshot?.nextStep ?? "Non renseigné";
+  const answersHtml = buildAnswersHtml(answers);
 
   return `
     <div style="font-family:Arial,Helvetica,sans-serif; color:#17304f; line-height:1.6; background:#f6f9ff; padding:32px;">
@@ -72,6 +134,12 @@ function buildProjectionHtml({
           <p style="margin:0;"><strong>Détails :</strong><br/>${escapeHtml(details || "Non renseignés")}</p>
         </div>
 
+        <h2 style="margin:0 0 12px; font-size:18px; color:#173b73;">Réponses du questionnaire</h2>
+
+        <div style="display:grid; gap:12px; margin:0 0 24px;">
+          ${answersHtml}
+        </div>
+
         <h2 style="margin:0 0 12px; font-size:18px; color:#173b73;">Projection associée</h2>
 
         <div style="display:grid; gap:12px;">
@@ -79,21 +147,21 @@ function buildProjectionHtml({
             <p style="margin:0 0 6px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#6f83a7; font-weight:700;">
               Vision
             </p>
-            <p style="margin:0;">${escapeHtml(vision)}</p>
+            <p style="margin:0; white-space:pre-line;">${escapeHtml(vision)}</p>
           </div>
 
           <div style="padding:16px 18px; background:#fbfdff; border:1px solid #e3eaf5; border-radius:14px;">
             <p style="margin:0 0 6px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#6f83a7; font-weight:700;">
               Diagnostic
             </p>
-            <p style="margin:0;">${escapeHtml(clarity)}</p>
+            <p style="margin:0; white-space:pre-line;">${escapeHtml(clarity)}</p>
           </div>
 
           <div style="padding:16px 18px; background:#fbfdff; border:1px solid #e3eaf5; border-radius:14px;">
             <p style="margin:0 0 6px; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#6f83a7; font-weight:700;">
               Suite proposée
             </p>
-            <p style="margin:0;">${escapeHtml(nextStep)}</p>
+            <p style="margin:0; white-space:pre-line;">${escapeHtml(nextStep)}</p>
           </div>
         </div>
       </div>
@@ -106,8 +174,11 @@ function buildProjectionText({
   email,
   activity,
   details,
+  answers,
   projectionSnapshot,
 }: SendProjectionLeadEmailParams) {
+  const answersText = buildAnswersText(answers);
+
   return `
 Nouveau lead Projection
 
@@ -115,6 +186,9 @@ Prénom : ${firstName}
 Email : ${email}
 Activité : ${activity || "Non renseignée"}
 Détails : ${details || "Non renseignés"}
+
+Réponses du questionnaire :
+${answersText}
 
 Projection :
 - Vision : ${projectionSnapshot?.vision ?? "Non renseigné"}
@@ -124,8 +198,7 @@ Projection :
 }
 
 function buildUserAutoReplyHtml({ firstName }: SendUserAutoReplyEmailParams) {
-  const formattedFirstName =
-    firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+  const formattedFirstName = formatFirstName(firstName);
 
   return `
   <div style="margin:0;padding:0;background-color:#eef2f8;">
@@ -226,8 +299,7 @@ function buildUserAutoReplyHtml({ firstName }: SendUserAutoReplyEmailParams) {
 }
 
 function buildUserAutoReplyText({ firstName }: SendUserAutoReplyEmailParams) {
-  const formattedFirstName =
-    firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+  const formattedFirstName = formatFirstName(firstName);
 
   return [
     `Bonjour ${formattedFirstName},`,
