@@ -1,4 +1,7 @@
-import type { ProjectionResult } from "@/lib/projection/types";
+import type {
+  ProjectionAnswers,
+  ProjectionResult,
+} from "@/lib/projection/types";
 
 type ItemProps = {
   title: string;
@@ -58,17 +61,32 @@ function Item({ title, content, variant = "default" }: ItemProps) {
   );
 }
 
-function normalize(text: string) {
-  return text.toLowerCase();
+function normalize(...values: Array<string | undefined>) {
+  return values
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
 }
 
 function includesOneOf(text: string, values: string[]) {
   return values.some((value) => text.includes(value));
 }
 
-function detectAngle(result: ProjectionResult): ProjectionAngle {
+function detectAngle(
+  result: ProjectionResult,
+  answers?: ProjectionAnswers
+): ProjectionAngle {
   const source = normalize(
-    `${result.vision} ${result.clarity} ${result.nextStep}`
+    result.vision,
+    result.clarity,
+    result.nextStep,
+    answers?.activity,
+    answers?.audience,
+    answers?.immediateUnderstanding,
+    answers?.currentBlur,
+    answers?.impactOfClarity,
+    answers?.naturalAction,
+    answers?.firstImpression
   );
 
   if (
@@ -89,6 +107,10 @@ function detectAngle(result: ProjectionResult): ProjectionAngle {
       "digitaux",
       "numérique",
       "numerique",
+      "conversion",
+      "visiteur",
+      "visiteurs",
+      "positionnement",
     ])
   ) {
     return "digital";
@@ -105,6 +127,9 @@ function detectAngle(result: ProjectionResult): ProjectionAngle {
       "personne",
       "personnes",
       "accompagnement",
+      "sens",
+      "repère",
+      "reperes",
     ])
   ) {
     return "accompagnement";
@@ -122,6 +147,9 @@ function detectAngle(result: ProjectionResult): ProjectionAngle {
       "professionnels",
       "expertise",
       "activité",
+      "offre de service",
+      "service",
+      "services",
     ])
   ) {
     return "expertise";
@@ -130,7 +158,31 @@ function detectAngle(result: ProjectionResult): ProjectionAngle {
   return "generic";
 }
 
-function buildImpactText(angle: ProjectionAngle) {
+function buildImpactText(
+  angle: ProjectionAngle,
+  answers?: ProjectionAnswers
+) {
+  const blur = normalize(answers?.currentBlur);
+  const impact = normalize(answers?.impactOfClarity);
+
+  if (
+    includesOneOf(blur, ["flou", "pas clair", "difficile à comprendre", "positionnement"])
+  ) {
+    return "Quand l’activité reste partiellement floue, les visiteurs peuvent percevoir une intention intéressante sans comprendre clairement ce qui est proposé.";
+  }
+
+  if (
+    includesOneOf(impact, [
+      "demandes qualifiées",
+      "prises de contact",
+      "clients",
+      "bons profils",
+      "attirer",
+    ])
+  ) {
+    return "Sans compréhension immédiate, l’intérêt existe parfois, mais il ne se transforme pas naturellement en prises de contact qualifiées.";
+  }
+
   switch (angle) {
     case "digital":
       return "Quand une offre n’est pas comprise rapidement, elle peut susciter de l’intérêt sans déclencher naturellement de prise de contact.";
@@ -139,20 +191,38 @@ function buildImpactText(angle: ProjectionAngle) {
       return "Quand l’activité reste difficile à saisir, les personnes concernées peuvent se reconnaître dans l’intention sans comprendre clairement pourquoi aller plus loin.";
 
     case "expertise":
-      return "Quand une expertise n’est pas formulée de manière nette, elle peut paraître sérieuse sans devenir immédiatement lisible ni engageante pour les bons profils.";
+      return "Quand une expertise n’est pas formulée de manière nette, elle peut paraître sérieuse sans devenir immédiatement lisible pour les bons profils.";
 
     default:
       return "Quand le message reste partiellement flou, les visiteurs perçoivent l’intention sans comprendre immédiatement pourquoi ils devraient vous contacter.";
   }
 }
 
-function buildImprovementText(angle: ProjectionAngle) {
+function buildImprovementText(
+  angle: ProjectionAngle,
+  answers?: ProjectionAnswers
+) {
+  const action = normalize(answers?.naturalAction);
+  const blur = normalize(answers?.currentBlur);
+
+  if (includesOneOf(action, ["diagnostic", "audit", "analyse"])) {
+    return "Un diagnostic ciblé permet d’identifier ce qui freine la compréhension et de clarifier le bon point d’entrée pour la suite.";
+  }
+
+  if (includesOneOf(action, ["contact", "échange", "echange", "rendez-vous", "rdv"])) {
+    return "Un travail de clarification permet de rendre l’activité plus lisible, afin que la première prise de contact paraisse plus naturelle et plus évidente.";
+  }
+
+  if (includesOneOf(blur, ["positionnement", "offre", "bénéfices", "benefices"])) {
+    return "Un travail de fond sur le positionnement, le message et la lisibilité permet de rendre l’offre plus nette et plus facile à comprendre.";
+  }
+
   switch (angle) {
     case "digital":
-      return "Un diagnostic ciblé permet d’identifier ce qui freine la compréhension et de clarifier le bon point d’entrée pour la suite.";
+      return "Un travail de clarification sur le message, la page et le parcours permet de rendre l’ensemble plus lisible et plus engageant.";
 
     case "accompagnement":
-      return "Un travail de clarification permet de rendre l’approche plus lisible, plus rassurante et plus simple à engager pour les personnes concernées.";
+      return "Un travail de clarification permet de rendre l’approche plus lisible, plus rassurante et plus simple à engager pour les bonnes personnes.";
 
     case "expertise":
       return "Un travail de formulation et de structure permet de rendre l’expertise plus compréhensible et d’aider les bons profils à se reconnaître plus vite.";
@@ -162,10 +232,16 @@ function buildImprovementText(angle: ProjectionAngle) {
   }
 }
 
-export function ResultCards({ result }: { result: ProjectionResult }) {
-  const angle = detectAngle(result);
-  const impactText = buildImpactText(angle);
-  const improvementText = buildImprovementText(angle);
+export function ResultCards({
+  result,
+  answers,
+}: {
+  result: ProjectionResult;
+  answers?: ProjectionAnswers;
+}) {
+  const angle = detectAngle(result, answers);
+  const impactText = buildImpactText(angle, answers);
+  const improvementText = buildImprovementText(angle, answers);
 
   return (
     <div className="grid gap-4 md:gap-6">
