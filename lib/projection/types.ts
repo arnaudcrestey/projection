@@ -20,9 +20,10 @@ export type ProjectionApiResponse = {
 };
 
 export type LeadRequest = {
-  fullName: string;
+  firstName: string;
   email: string;
-  organization?: string;
-  message?: string;
+  activity?: string;
+  details?: string;
+  answers?: ProjectionAnswers;
   projectionSnapshot?: ProjectionResult;
 };
