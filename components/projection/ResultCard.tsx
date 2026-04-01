@@ -17,17 +17,17 @@ type ProjectionAngle =
 
 function Item({ title, content, variant = "default" }: ItemProps) {
   const shell =
-    "relative overflow-hidden rounded-[22px] border shadow-[0_24px_70px_rgba(22,48,100,0.055)]";
+    "relative overflow-hidden rounded-[22px] border shadow-[0_18px_46px_rgba(22,48,100,0.05)]";
 
   const variants = {
     hero:
-      "border-[#d9e4f5] bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,251,255,0.98)_52%,rgba(243,247,255,0.98)_100%)] px-6 py-6 md:px-8 md:py-8",
+      "border-[#d9e4f5] bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,251,255,0.98)_52%,rgba(243,247,255,0.98)_100%)] px-5 py-5 sm:px-6 sm:py-6 md:px-8 md:py-8",
     default:
-      "border-[#dde6f3] bg-[linear-gradient(180deg,rgba(255,255,255,0.94)_0%,rgba(251,253,255,0.96)_100%)] px-5 py-5 md:px-7 md:py-7",
+      "border-[#dde6f3] bg-[linear-gradient(180deg,rgba(255,255,255,0.95)_0%,rgba(251,253,255,0.96)_100%)] px-5 py-5 sm:px-6 sm:py-6 md:px-7 md:py-7",
     accent:
-      "border-[#d6e2f5] bg-[linear-gradient(180deg,rgba(248,251,255,0.98)_0%,rgba(240,246,255,0.98)_100%)] px-5 py-5 md:px-7 md:py-7",
+      "border-[#d6e2f5] bg-[linear-gradient(180deg,rgba(248,251,255,0.98)_0%,rgba(240,246,255,0.98)_100%)] px-5 py-5 sm:px-6 sm:py-6 md:px-7 md:py-7",
     soft:
-      "border-[#e3eaf5] bg-[linear-gradient(180deg,rgba(255,255,255,0.92)_0%,rgba(246,249,255,0.95)_100%)] px-5 py-5 md:px-7 md:py-7",
+      "border-[#e3eaf5] bg-[linear-gradient(180deg,rgba(255,255,255,0.93)_0%,rgba(246,249,255,0.95)_100%)] px-5 py-5 sm:px-6 sm:py-6 md:px-7 md:py-7",
   };
 
   const eyebrow = {
@@ -38,10 +38,10 @@ function Item({ title, content, variant = "default" }: ItemProps) {
   };
 
   const contentStyle = {
-    hero: "mt-4 text-[15px] leading-7 text-[#17304f] md:text-[18px] md:leading-9",
-    default: "mt-3 text-[14px] leading-7 text-[#17304f] md:text-[16px] md:leading-8",
-    accent: "mt-3 text-[14px] leading-7 text-[#17304f] md:text-[16px] md:leading-8",
-    soft: "mt-3 text-[14px] leading-7 text-[#17304f] md:text-[16px] md:leading-8",
+    hero: "mt-4 text-[15px] leading-7 text-[#17304f] sm:text-[16px] md:text-[18px] md:leading-9",
+    default: "mt-3 text-[14px] leading-7 text-[#17304f] sm:text-[15px] md:text-[16px] md:leading-8",
+    accent: "mt-3 text-[14px] leading-7 text-[#17304f] sm:text-[15px] md:text-[16px] md:leading-8",
+    soft: "mt-3 text-[14px] leading-7 text-[#17304f] sm:text-[15px] md:text-[16px] md:leading-8",
   };
 
   return (
@@ -50,7 +50,7 @@ function Item({ title, content, variant = "default" }: ItemProps) {
 
       <div className="relative">
         <h3
-          className={`text-[10px] font-semibold uppercase tracking-[0.24em] md:text-[11px] ${eyebrow[variant]}`}
+          className={`text-[10px] font-semibold uppercase tracking-[0.22em] md:text-[11px] ${eyebrow[variant]}`}
         >
           {title}
         </h3>
@@ -244,7 +244,7 @@ export function ResultCards({
   const improvementText = buildImprovementText(angle, answers);
 
   return (
-    <div className="grid gap-4 md:gap-6">
+    <div className="space-y-4 md:space-y-6">
       <Item
         title="Ce que vous exprimez aujourd’hui"
         content={result.vision}
