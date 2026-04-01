@@ -7,20 +7,26 @@ import { PageFrame } from "@/components/projection/PageFrame";
 import { ResultCards } from "@/components/projection/ResultCard";
 import { buildFallbackProjection } from "@/lib/projection/fallback";
 import { loadAnswers, loadResult } from "@/lib/projection/storage";
-import type { ProjectionResult } from "@/lib/projection/types";
+import type {
+  ProjectionAnswers,
+  ProjectionResult,
+} from "@/lib/projection/types";
 
 export default function ResultatPage() {
   const [result, setResult] = useState<ProjectionResult | null>(null);
+  const [answers, setAnswers] = useState<ProjectionAnswers | null>(null);
 
   useEffect(() => {
-    const stored = loadResult();
-    if (stored) {
-      setResult(stored);
+    const storedAnswers = loadAnswers();
+    setAnswers(storedAnswers);
+
+    const storedResult = loadResult();
+    if (storedResult) {
+      setResult(storedResult);
       return;
     }
 
-    const answers = loadAnswers();
-    const fallback = buildFallbackProjection(answers);
+    const fallback = buildFallbackProjection(storedAnswers);
     setResult(fallback);
   }, []);
 
@@ -38,7 +44,7 @@ export default function ResultatPage() {
         </div>
       </section>
 
-      {result ? <ResultCards result={result} /> : null}
+      {result ? <ResultCards result={result} answers={answers ?? undefined} /> : null}
 
       <div className="mt-6 flex justify-center md:mt-8">
         <Link
