@@ -200,11 +200,7 @@ export function Questionnaire() {
 
         <div className="rounded-[22px] border border-[#e0e8f5] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(248,251,255,0.94)_100%)] px-4 py-5 sm:px-6 sm:py-6">
           <div className="flex flex-col items-center gap-3 text-center">
-            <p className="max-w-2xl text-[13px] leading-6 text-[#6f809d] sm:text-[14px] sm:leading-7">
-              Une fois vos réponses envoyées, l’analyse reformule votre activité
-              pour en faire ressortir une projection plus claire et plus exploitable.
-            </p>
-
+           
             <button
               type="submit"
               disabled={loading}
