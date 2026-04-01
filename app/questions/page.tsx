@@ -26,9 +26,7 @@ export default function QuestionsPage() {
 
             <div className="mt-5 rounded-[18px] border border-[#e3eaf6] bg-white/75 px-4 py-3.5 sm:px-5 sm:py-4">
               <p className="text-[13px] leading-6 text-[#667796] sm:text-[14px] sm:leading-7">
-                Prenez simplement les questions dans l’ordre. Chaque réponse aide
-                à clarifier ce que vous faites, à qui cela s’adresse, et ce que
-                votre activité devrait faire comprendre plus vite.
+                Chaque réponse affine la compréhension de votre activité.
               </p>
             </div>
           </div>
