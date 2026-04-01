@@ -3,13 +3,17 @@ import {
   sendProjectionLeadEmail,
   sendUserAutoReplyEmail,
 } from "@/lib/projection/mailer";
-import type { ProjectionResult } from "@/lib/projection/types";
+import type {
+  ProjectionAnswers,
+  ProjectionResult,
+} from "@/lib/projection/types";
 
 type LeadRequest = {
   firstName?: string;
   email?: string;
   activity?: string;
   details?: string;
+  answers?: ProjectionAnswers;
   projectionSnapshot?: ProjectionResult | null;
 };
 
@@ -25,6 +29,7 @@ export async function POST(request: Request) {
     const email = body.email?.trim() ?? "";
     const activity = body.activity?.trim() ?? "";
     const details = body.details?.trim() ?? "";
+    const answers = body.answers ?? {};
     const projectionSnapshot = body.projectionSnapshot ?? null;
 
     if (!firstName || !email) {
@@ -52,6 +57,7 @@ export async function POST(request: Request) {
       email,
       activity,
       details,
+      answers,
       projectionSnapshot,
     });
 
