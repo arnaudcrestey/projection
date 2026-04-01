@@ -5,65 +5,52 @@ function clean(value?: string) {
 }
 
 export function buildProjectionPrompt(answers: ProjectionAnswers) {
-  return `Tu es un expert en reformulation de positionnement haut de gamme.
-
-Ta mission :
-transformer des réponses utilisateur en une formulation claire, fluide, crédible et premium.
-
-Le résultat doit donner cette impression immédiate :
-- c’est clair
-- c’est sérieux
-- c’est structuré
-- c’est humain
-- c’est professionnel
-- ce n’est ni générique, ni plat, ni marketing
+  return `Tu reformules une activité pour un rendu clair, haut de gamme, crédible et naturel.
 
 OBJECTIF :
-Quelqu’un doit comprendre en quelques secondes :
-- ce que fait la personne
+Une personne qui découvre cette activité doit comprendre rapidement :
+- ce qui est proposé
 - pour qui
-- ce que cela apporte concrètement
-- comment commencer simplement
+- ce que cela apporte
+- comment commencer
 
-STYLE ATTENDU :
-- français naturel
-- élégant mais accessible
-- ton sobre, professionnel, premium
-- formulation incarnée
-- vocabulaire simple mais qualitatif
-- pas de lourdeur
-- pas de banalité
-- pas d’effet “IA générique”
-
-RÈGLES STRICTES :
-- 1 à 2 phrases maximum par bloc
-- chaque phrase doit être utile
-- chaque bloc doit être immédiatement compréhensible
-- le texte doit être plus fort, plus net et plus fluide que les réponses d’origine
-- tu dois reformuler avec intelligence, pas résumer mécaniquement
-- tu dois produire un résultat qui pourrait apparaître sur un site haut de gamme
-
-INTERDICTIONS :
-- ne pas copier les phrases utilisateur
-- ne pas paraphraser mollement
-- pas de jargon
-- pas de promesses marketing
-- pas de phrases creuses
-- pas de mots passe-partout comme :
-  "accompagne", "aide", "permet", "solution adaptée", "avancer concrètement"
-  sauf si c’est vraiment le meilleur choix
-- éviter les tournures trop vues, fades ou génériques
-- éviter les répétitions entre les blocs
-- ne jamais donner un rendu “coach flou” ou “texte passe-partout”
-
-EXIGENCE DE QUALITÉ :
+RÉSULTAT ATTENDU :
 Le texte doit être :
-- plus précis qu’un résumé
-- plus élégant qu’un texte fonctionnel
-- plus sobre qu’un texte commercial
-- plus distinctif qu’un texte standard d’agence
+- clair immédiatement
+- sobre mais premium
+- simple mais pas plat
+- professionnel mais humain
+- distinctif sans en faire trop
 
-DONNÉES UTILISATEUR :
+IMPORTANT :
+Le rendu doit pouvoir apparaître tel quel sur un site élégant et sérieux.
+
+RÈGLES :
+- 1 ou 2 phrases maximum par bloc
+- phrases fluides
+- vocabulaire accessible
+- ton calme, net, crédible
+- pas de répétition entre les blocs
+- pas de formule passe-partout
+- pas de jargon d’agence
+- pas de ton commercial
+- pas de promesse artificielle
+- pas de style “IA générique”
+
+À ÉVITER AUTANT QUE POSSIBLE :
+- présence digitale
+- leviers
+- conversion
+- visibilité
+- impact
+- engageant
+- solution adaptée
+- optimiser
+- explorer une analyse
+- transformer l’intérêt
+- accompagner / aider / permettre, sauf si c’est vraiment la meilleure formulation
+
+DONNÉES :
 
 Activité :
 ${clean(answers.activity)}
@@ -85,34 +72,24 @@ FORMAT JSON OBLIGATOIRE :
   "nextStep": "..."
 }
 
-CONSINGES PAR BLOC :
+CONSINGES :
 
 vision :
-Formule clairement ce que fait la personne et pour qui.
-Le rendu doit être net, crédible, humain et valorisant.
-On doit comprendre la nature de l’activité sans effort.
+Dire clairement ce que fait la personne et pour qui.
+Le résultat doit être lisible, crédible et concret.
 
 clarity :
-Exprime ce qu’un visiteur doit comprendre immédiatement.
-Ce bloc doit clarifier la promesse de manière simple, fluide et premium.
-Il doit donner de la lisibilité, pas répéter le bloc vision.
+Exprimer ce qu’un visiteur doit comprendre immédiatement.
+Ne pas répéter le bloc vision.
+Donner de la lisibilité, pas du marketing.
 
 nextStep :
-Formule une première étape naturelle, rassurante et élégante.
-Cette étape doit sembler simple, logique et facile à engager.
-
-IMPORTANT :
-- chaque bloc doit être court, mais pas sec
-- chaque bloc doit être sobre, mais pas fade
-- chaque bloc doit être clair, mais avec de la tenue
-- privilégie la justesse à la quantité
-- si une formule semble banale, remplace-la par mieux
-- si une phrase sonne générique, réécris-la
-- si deux blocs se ressemblent, différencie-les
+Formuler une première étape simple, logique, rassurante et naturelle.
+Elle doit donner envie d’avancer sans pression.
 
 TEST FINAL :
-En lisant le résultat, on doit se dire :
-“C’est clair, sérieux, et ça donne confiance.”
+Le lecteur doit pouvoir se dire :
+“C’est clair. Je comprends ce qui est proposé. Cela semble sérieux.”
 
 Retourne uniquement le JSON.
 `;
