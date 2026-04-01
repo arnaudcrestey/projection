@@ -7,8 +7,8 @@ function clean(value?: string) {
 export function buildProjectionPrompt(answers: ProjectionAnswers) {
   return `Tu dois reformuler une activité de manière simple et claire.
 
-Objectif :
-Quelqu’un qui découvre cette activité doit comprendre en quelques secondes :
+OBJECTIF :
+Quelqu’un doit comprendre en 3 secondes :
 - ce que fait la personne
 - pour qui
 - ce que ça apporte
@@ -16,45 +16,28 @@ Quelqu’un qui découvre cette activité doit comprendre en quelques secondes :
 
 ---
 
-Règles absolues :
+RÈGLES STRICTES :
 
-- Tu ne dois PAS reprendre les phrases telles quelles
-- Tu dois reformuler avec tes propres mots
-- Tu dois simplifier les idées
-- Tu dois supprimer tout ce qui est inutile
-
----
-
-Style :
-
-- phrases courtes
+- 1 ou 2 phrases maximum par bloc
+- phrases courtes (12–15 mots idéalement)
 - mots simples
 - ton naturel
 - pas de jargon
-- pas de langage “intelligent”
+- pas de répétition
 
 ---
 
-Interdictions strictes :
+INTERDICTIONS :
 
-- copier les phrases utilisateur
-- phrases longues
-- répétitions
-- mots abstraits
-- ton “expert”
-- structures compliquées
-
----
-
-Format obligatoire :
-
-- maximum 2 phrases par bloc
-- 1 idée par phrase
-- phrases courtes (15 mots max idéalement)
+- ne pas copier les phrases utilisateur
+- pas de langage marketing
+- pas de mots abstraits (démarche, cadre, levier…)
+- pas de phrases longues
+- pas de structure compliquée
 
 ---
 
-Données :
+DONNÉES :
 
 Activité :
 ${clean(answers.activity)}
@@ -62,7 +45,7 @@ ${clean(answers.activity)}
 Audience :
 ${clean(answers.audience)}
 
-Compréhension attendue :
+Compréhension :
 ${clean(answers.immediateUnderstanding)}
 
 Action :
@@ -70,7 +53,7 @@ ${clean(answers.naturalAction)}
 
 ---
 
-Tu produis UNIQUEMENT ce JSON :
+FORMAT JSON OBLIGATOIRE :
 
 {
   "vision": "...",
@@ -80,32 +63,30 @@ Tu produis UNIQUEMENT ce JSON :
 
 ---
 
-Consignes précises :
+CONSINGES :
 
 vision :
-Explique clairement ce que fait la personne et pour qui.
-Ne copie pas les phrases.
-Simplifie.
+Dire clairement ce que fait la personne + pour qui.
 
 clarity :
-Explique ce que l’on doit comprendre immédiatement et ce que la personne peut faire.
-Sois concret.
+Dire ce qu’on comprend immédiatement + ce qu’on peut faire.
 
 nextStep :
-Explique comment commencer simplement.
-Propose une action naturelle.
+Donner une première étape simple et naturelle.
 
 ---
 
 IMPORTANT :
 
-Chaque bloc doit être lisible en moins de 5 secondes.
+Chaque bloc doit être compris instantanément.
 
-Si une phrase est inutile → supprime-la.
+Si c’est trop long → raccourcis  
+Si c’est flou → simplifie  
+Si c’est inutile → supprime  
 
-Le résultat doit donner :
+Résultat attendu :
 "Ok, j’ai compris."
 
-Pas plus.
+Rien de plus.
 `;
 }
