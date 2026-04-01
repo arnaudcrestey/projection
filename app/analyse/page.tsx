@@ -53,7 +53,6 @@ useEffect(() => {
             <div className="mt-5 rounded-[18px] border border-[#e3eaf6] bg-white/75 px-4 py-3.5 sm:px-5 sm:py-4">
               <p className="text-[13px] leading-6 text-[#667796] sm:text-[14px] sm:leading-7">
                 L’analyse avance par étapes pour faire émerger votre message central et une direction plus nette.
-                plus nette.
               </p>
             </div>
           </div>
