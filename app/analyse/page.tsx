@@ -47,14 +47,12 @@ useEffect(() => {
             </h1>
 
             <p className="mt-4 max-w-2xl text-[14px] leading-7 text-[#5f7190] sm:text-[15px] sm:leading-7 md:text-[16px] md:leading-8">
-              Vos réponses sont en train d’être relues pour faire émerger une
-              restitution plus claire, plus structurée et immédiatement exploitable.
+              Vos réponses sont analysées pour produire une restitution claire et exploitable.
             </p>
 
             <div className="mt-5 rounded-[18px] border border-[#e3eaf6] bg-white/75 px-4 py-3.5 sm:px-5 sm:py-4">
               <p className="text-[13px] leading-6 text-[#667796] sm:text-[14px] sm:leading-7">
-                L’analyse avance par étapes pour clarifier le message central,
-                projeter le parcours utilisateur et faire ressortir une direction
+                L’analyse avance par étapes pour faire émerger votre message central et une direction plus nette.
                 plus nette.
               </p>
             </div>
