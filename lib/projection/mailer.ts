@@ -9,12 +9,38 @@ type SendProjectionLeadEmailParams = {
   projectionSnapshot?: ProjectionResult | null;
 };
 
+type SendUserAutoReplyEmailParams = {
+  firstName: string;
+  email: string;
+};
+
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function createTransporter() {
+  const host = process.env.EMAIL_HOST;
+  const port = Number(process.env.EMAIL_PORT || 465);
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
+
+  if (!host || !user || !pass) {
+    throw new Error("Configuration email incomplète.");
+  }
+
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: {
+      user,
+      pass,
+    },
+  });
 }
 
 function buildProjectionHtml({
@@ -97,35 +123,80 @@ Projection :
 `.trim();
 }
 
+function buildUserAutoReplyHtml({ firstName }: SendUserAutoReplyEmailParams) {
+  return `
+    <div style="font-family:Arial,Helvetica,sans-serif; color:#17304f; line-height:1.7; background:#f6f9ff; padding:32px;">
+      <div style="max-width:680px; margin:0 auto; background:#ffffff; border:1px solid #dbe6f6; border-radius:20px; padding:32px;">
+        <p style="margin:0 0 18px;">Bonjour ${escapeHtml(firstName)},</p>
+
+        <p style="margin:0 0 16px;">
+          Votre demande a bien été reçue avec votre diagnostic.
+        </p>
+
+        <p style="margin:0 0 16px;">
+          Je reviendrai vers vous avec un retour clair et ciblé pour voir ce qui mérite réellement d’être clarifié.
+        </p>
+
+        <p style="margin:24px 0 0;">
+          Bien à vous,<br/>
+          <strong>Arnaud Crestey</strong><br/>
+          <a href="https://arnaudcrestey.com" style="color:#2f63e9; text-decoration:none;">arnaudcrestey.com</a>
+        </p>
+      </div>
+    </div>
+  `;
+}
+
+function buildUserAutoReplyText({ firstName }: SendUserAutoReplyEmailParams) {
+  return `
+Bonjour ${firstName},
+
+Votre demande a bien été reçue avec votre diagnostic.
+
+Je reviendrai vers vous avec un retour clair et ciblé pour voir ce qui mérite réellement d’être clarifié.
+
+Bien à vous,
+Arnaud Crestey
+arnaudcrestey.com
+`.trim();
+}
+
 export async function sendProjectionLeadEmail(
   params: SendProjectionLeadEmailParams
 ) {
-  const host = process.env.EMAIL_HOST;
-  const port = Number(process.env.EMAIL_PORT || 465);
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
+  const transporter = createTransporter();
   const to = process.env.CONTACT_TO_EMAIL;
+  const from = process.env.EMAIL_USER;
 
-  if (!host || !user || !pass || !to) {
-    throw new Error("Configuration email incomplète.");
+  if (!to || !from) {
+    throw new Error("Destinataire email non configuré.");
   }
 
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
-    auth: {
-      user,
-      pass,
-    },
-  });
-
   await transporter.sendMail({
-    from: user,
+    from,
     to,
     replyTo: params.email,
     subject: `Nouvelle demande Projection — ${params.firstName}`,
     text: buildProjectionText(params),
     html: buildProjectionHtml(params),
+  });
+}
+
+export async function sendUserAutoReplyEmail(
+  params: SendUserAutoReplyEmailParams
+) {
+  const transporter = createTransporter();
+  const from = process.env.EMAIL_USER;
+
+  if (!from) {
+    throw new Error("Expéditeur email non configuré.");
+  }
+
+  await transporter.sendMail({
+    from,
+    to: params.email,
+    subject: "Votre demande a bien été reçue",
+    text: buildUserAutoReplyText(params),
+    html: buildUserAutoReplyHtml(params),
   });
 }
