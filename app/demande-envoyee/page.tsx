@@ -68,11 +68,7 @@ export default function DemandeEnvoyeePage() {
               </Link>
             </div>
 
-            <p className="mt-6 text-[12px] leading-6 text-[#7d8eab] md:text-[13px]">
-              Cette page clôt votre diagnostic. La suite se fait maintenant de
-              manière simple, sans démarche supplémentaire de votre part.
-            </p>
-          </div>
+           </div>
         </div>
       </section>
     </PageFrame>
