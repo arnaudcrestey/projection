@@ -6,25 +6,6 @@ import { projectionQuestions } from "@/lib/projection/questions";
 import { loadAnswers, saveAnswers, saveResult } from "@/lib/projection/storage";
 import type { ProjectionAnswers } from "@/lib/projection/types";
 
-const USE_MOCK_ANSWERS = true;
-
-const mockAnswers: ProjectionAnswers = {
-  activity:
-    "Je conçois des expériences numériques qui aident des professionnels à rendre leur offre plus lisible, plus engageante et plus facile à transformer en prises de contact qualifiées.",
-  audience:
-    "Des indépendants, consultants, formateurs et experts qui ont une vraie valeur, mais qui peinent à la faire comprendre rapidement sur leur site ou leurs supports.",
-  immediateUnderstanding:
-    "En arrivant sur mon univers, la personne doit comprendre en quelques secondes ce que je fais, à qui cela s’adresse et en quoi cela peut l’aider concrètement.",
-  currentBlur:
-    "Aujourd’hui, mon activité donne une impression intéressante mais encore trop diffuse : le visiteur perçoit des compétences, sans toujours identifier clairement l’offre, le bénéfice immédiat ni le bon prochain pas.",
-  impactOfClarity:
-    "Avec un positionnement plus net, je pourrais rassurer plus vite, mieux filtrer les bons profils et augmenter naturellement la qualité des demandes entrantes.",
-  naturalAction:
-    "Découvrir une page ou un diagnostic pertinent, se reconnaître dans la problématique présentée, puis demander un échange ou une recommandation adaptée.",
-  firstImpression:
-    "Une impression de maîtrise, de finesse et de modernité, avec un cadre professionnel haut de gamme, accessible, rassurant et réellement structuré.",
-};
-
 function emptyAnswers(): ProjectionAnswers {
   return projectionQuestions.reduce<ProjectionAnswers>((acc, question) => {
     acc[question.id] = "";
@@ -32,14 +13,9 @@ function emptyAnswers(): ProjectionAnswers {
   }, {} as ProjectionAnswers);
 }
 
-function initialAnswers(): ProjectionAnswers {
-  const base = emptyAnswers();
-  return USE_MOCK_ANSWERS ? { ...base, ...mockAnswers } : base;
-}
-
 export function Questionnaire() {
   const router = useRouter();
-  const [answers, setAnswers] = useState<ProjectionAnswers>(initialAnswers());
+  const [answers, setAnswers] = useState<ProjectionAnswers>(emptyAnswers());
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -51,8 +27,6 @@ export function Questionnaire() {
 
     if (hasStoredAnswers) {
       setAnswers((current) => ({ ...current, ...stored }));
-    } else if (USE_MOCK_ANSWERS) {
-      saveAnswers(initialAnswers());
     }
   }, []);
 
@@ -200,7 +174,6 @@ export function Questionnaire() {
 
         <div className="rounded-[22px] border border-[#e0e8f5] bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(248,251,255,0.94)_100%)] px-4 py-5 sm:px-6 sm:py-6">
           <div className="flex flex-col items-center gap-3 text-center">
-           
             <button
               type="submit"
               disabled={loading}
@@ -215,7 +188,6 @@ export function Questionnaire() {
                 "Voir ma projection"
               )}
             </button>
-
           </div>
         </div>
       </div>
