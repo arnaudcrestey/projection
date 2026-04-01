@@ -164,7 +164,7 @@ function buildUserAutoReplyHtml({ firstName }: SendUserAutoReplyEmailParams) {
                     margin-bottom:8px;
                   "
                 >
-                  DIAGNOSTIC STRATÉGIQUE
+                  DIAGNOSTIC PROJECTION
                 </div>
 
                 <div
